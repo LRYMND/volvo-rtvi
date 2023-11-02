@@ -5,7 +5,7 @@ import CarplayWeb, {
   SendCommand,
   SendTouch,
   findDevice,
-} from '../node-carplay/dist/web'
+} from 'node-carplay/web'
 import { Command } from './types'
 
 let carplayWeb: CarplayWeb | null = null

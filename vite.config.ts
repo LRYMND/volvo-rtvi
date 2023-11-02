@@ -1,30 +1,51 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
+import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  // Specify your entry point
-  plugins: [react()],
-  resolve: {
-    alias: {
-      // Define an alias for worker files using relative paths
-      '/worker/': './src/worker/',
-      stream: "stream-browserify",
-      Buffer: "buffer",
+  plugins: [
+    react(),
+    {
+      name: "configure-response-headers",
+      configureServer: (server) => {
+        server.middlewares.use((_req, res, next) => {
+          res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+          res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+          next();
+        });
+      },
     },
-  },
+  ],
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: 'globalThis'
+        global: "globalThis",
       },
       plugins: [
         NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true
-        })
+            buffer: true
+          }),
+        NodeModulesPolyfillPlugin()
       ]
     }
   },
-  // Add any other configuration options you require
-	});
+  resolve: {
+    alias: {
+      stream: 'stream-browserify',
+      buffer: 'buffer',
+      events: 'events'
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [
+        // Enable rollup polyfills plugin
+        // used during production bundling
+        rollupNodePolyFill()
+      ]
+    }
+  }
+})

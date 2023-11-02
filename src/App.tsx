@@ -14,7 +14,7 @@ import {
   requestDevice,
   DongleConfig,
   CommandMapping,
-} from './node-carplay/dist/web'
+} from 'node-carplay/web'
 import { CarPlayWorker } from './worker/types'
 import useCarplayAudio from './useCarplayAudio'
 import { useCarplayTouch } from './useCarplayTouch'
@@ -35,7 +35,6 @@ const RETRY_DELAY_MS = 30000
 
 function App() {
   const [isPlugged, setPlugged] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
   const [receivingVideo, setReceivingVideo] = useState(false)
   const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -48,11 +47,15 @@ function App() {
   const renderWorker = useMemo(() => {
     if (!canvasElement) return;
   
-    const offscreenCanvas = new OffscreenCanvas(canvasElement.width, canvasElement.height);
-    const worker = new Worker('./worker/render/Render.worker.ts');
-  
-    worker.postMessage(new InitEvent(offscreenCanvas), [offscreenCanvas]);
-    return worker;
+    const worker = new Worker(
+      new URL('./worker/render/Render.worker.ts', import.meta.url), {
+        type: 'module'
+      }
+    )
+    const canvas = canvasElement.transferControlToOffscreen()
+    // @ts-ignore
+    worker.postMessage(new InitEvent(canvas), [canvas])
+    return worker
   }, [canvasElement]);
   
   useLayoutEffect(() => {
@@ -61,9 +64,15 @@ function App() {
     }
   }, [])
 
-  const carplayWorker = useMemo(() => {
-    return new Worker('./worker/CarPlay.worker.ts') as CarPlayWorker;
-  }, []);
+  const carplayWorker = useMemo(
+    () =>
+      new Worker(
+        new URL('./worker/CarPlay.worker.ts', import.meta.url), {
+          type: 'module'
+        }
+      ) as CarPlayWorker,
+    [],
+  )  
 
   const { processAudio, startRecording, stopRecording } =
     useCarplayAudio(carplayWorker)

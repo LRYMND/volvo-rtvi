@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@mui/material": "^5.14.17",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -28,6 +29,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
+    "react-simple-keyboard": "^3.7.34",
+    "react-spinners-kit": "^1.9.1",
+    "sass": "^1.69.5",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
     "stream-browserify": "^3.0.0",
     "typescript": "^5.0.2",
     "web-vitals": "^3.4.0"

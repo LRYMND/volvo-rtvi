@@ -14,8 +14,12 @@ import Volvo from '../volvo/Volvo';
 import "./../../../themes.scss"
 import './home.scss';
 
-const socket = io("ws://localhost:5005")
+const socket = io("ws://localhost:3001")
 //const versionNumber = process.env.PACKAGE_VERSION;
+
+function testSocket(page) {
+  socket.emit("FRONTEND_MESSAGE");
+}
 
 
 const Home = () => {
@@ -23,9 +27,19 @@ const Home = () => {
   const [view, setView] = useState('Dashboard')
 
 
-  useEffect(() => {
-    socket.on('userSettings', (event, args) => { test(args)});
+  socket.on("BACKEND_MESSAGE", (args) => {
+    console.log(args);
   })
+
+  useEffect(() => {
+    const socket = io({ transports: ["websocket"] });
+
+    socket.emit("message", "hello");
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   function test (args) {
     console.log('hallo')
@@ -264,7 +278,9 @@ const Home = () => {
 
   return (
     <>
-    Home
+    <button type="button" onClick={() => testSocket()}>
+        Click me
+      </button>
 
     {showNav &&
             <NavBar

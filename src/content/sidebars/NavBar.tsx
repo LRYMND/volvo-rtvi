@@ -16,7 +16,7 @@ const NavBar = ({ userSettings, view, setView }) => {
 
 
   return (
-    <div className={`navbar ${userSettings.app.colorTheme.value}`} style={{ backgroundImage: `url(${NavBarBackground})` }}>
+    <div className={`navbar green`} style={{ backgroundImage: `url(${NavBarBackground})` }}>
 
 
       <button type="button" onClick={() => changeView('Dashboard')}>

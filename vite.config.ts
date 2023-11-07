@@ -40,11 +40,13 @@ export default defineConfig({
     }
   },
   build: {
+    manifest: true,
     rollupOptions: {
+      input: './src/main.tsx',
       plugins: [
         // Enable rollup polyfills plugin
         // used during production bundling
-        rollupNodePolyFill()
+        rollupNodePolyFill(),
       ]
     }
   }

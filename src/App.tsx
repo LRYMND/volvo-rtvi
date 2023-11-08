@@ -26,6 +26,10 @@ function App() {
     console.log(serverHello)
   }, []); // Empty dependency array to fetch data only once
 
+  socket.on("BACKEND_MESSAGE", (args) => {
+    console.log(args);
+  });
+
   socket.on("connect_error", (error) => {
     console.error("Socket.io connection error:", error);
   });

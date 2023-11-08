@@ -7,6 +7,7 @@ import { createServer } from "http";
 
 const port = process.env.PORT || 3001;
 const publicPath = path.join(path.resolve(), "public");
+const distPath = path.join(path.resolve(), "dist");
 
 const app = express();
 const server = createServer(app);
@@ -15,8 +16,14 @@ app.get("/api/v1/hello", (_req, res) => {
     res.json({ message: "Hello, world!" });
 });
 
-app.use("/", express.static(publicPath));
-app.use("/src", assetsRouter);
+if (process.env.NODE_ENV === "production") {
+    app.use("/", express.static(distPath));
+  } else {
+    app.use("/", express.static(publicPath));
+    app.use("/src", assetsRouter);
+  }
+
+
 app.use(pageRouter);
 
 app.listen(port, () => {

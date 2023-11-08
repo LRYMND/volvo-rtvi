@@ -14,7 +14,7 @@
 <body>
   <div id="root"></div>
   <% if (environment==='production' ) { %>
-    <script type="module" src="<%= manifest['src/main.js'].file %>"></script>
+    <script type="module" src="<%= manifest['src/main.tsx'].file %>"></script>
     <% } else { %>
       <script type="module">
         import RefreshRuntime from 'http://localhost:5173/@react-refresh'

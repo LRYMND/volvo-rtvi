@@ -26,10 +26,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(pageRouter);
 
-app.listen(port, () => {
-    console.log("Server listening on port", port);
-});
-
 
 const io = new Server(server, {
     cors: {
@@ -53,3 +49,7 @@ io.on("connection", (socket) => {
       io.emit("BACKEND_MESSAGE", "Message from Backend")
     });
   });
+
+  server.listen(port, () => {
+    console.log("Server listening on port", port);
+});

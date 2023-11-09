@@ -1,6 +1,8 @@
 from flask import Flask, send_from_directory, render_template
 from flask_socketio import SocketIO
+from flask import request
 import os
+import json
 
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'dist'), static_folder=os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), static_url_path='/assets')
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -16,7 +18,24 @@ def serve_index():
 def serve_assets(filename):
     return send_from_directory(os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), filename)
 
-# Define additional routes and API endpoints as needed.
+@app.route('/api/appSettings', methods=['GET'])
+def get_app_settings():
+    with open('app_settings.json', 'r') as app_settings_file:
+        settings = json.load(app_settings_file)
+    return settings, 200
+
+@app.route('/api/appSettings', methods=['POST'])
+def update_app_settings():
+    data = request.get_json()
+
+    if data:
+        with open('app_settings.json', 'w') as app_settings_file:
+            json.dump(data, app_settings_file, indent=2)
+
+        return {'message': 'App settings updated successfully'}, 200
+    else:
+        return {'message': 'Invalid data provided'}, 400
+
 @app.route('/api/data', methods=['GET'])
 def get_data():
     data = {"message": "Hello from the backend!"}

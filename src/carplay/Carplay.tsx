@@ -86,7 +86,6 @@ import {
     // subscribe to worker messages
     useEffect(() => {
       carplayWorker.onmessage = ev => {
-        console.log("Hello")
         const { type } = ev.data
         switch (type) {
           case 'plugged':

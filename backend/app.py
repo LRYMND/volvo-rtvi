@@ -1,6 +1,7 @@
 from flask import Flask, send_from_directory, render_template
 from flask_socketio import SocketIO
 from flask import request
+from request_car_data import request_data_from_car
 import os
 import json
 
@@ -18,6 +19,7 @@ def serve_index():
 def serve_assets(filename):
     return send_from_directory(os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), filename)
 
+# APP Settings
 @app.route('/api/appSettings', methods=['GET'])
 def get_app_settings():
     with open('app_settings.json', 'r') as app_settings_file:
@@ -36,6 +38,13 @@ def update_app_settings():
     else:
         return {'message': 'Invalid data provided'}, 400
 
+# CAR DATA
+@app.route('/api/car/<request>', methods=['GET'])
+def request_car_data(request):
+    data = request_data_from_car(request)
+    return data, 200
+
+# Misc
 @app.route('/api/data', methods=['GET'])
 def get_data():
     data = {"message": "Hello from the backend!"}

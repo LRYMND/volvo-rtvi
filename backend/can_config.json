@@ -1,0 +1,94 @@
+{
+    "CAN_BUS": {
+        "interface": "socketcan",
+        "channel": "can0",
+        "bitrate": 500000
+    },
+    "REQ_ID": "0x000FFFFE",
+    "CAN_MESSAGES": [
+        {
+            "request": "boost",
+            "name": "Boost Manifold pressure",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 2,
+            "limit_start": 1.5,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x12, 0x9D, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "x*10",
+            "unit": "Bar",
+            "is_16bit": false
+        },
+        {
+            "request": "intake",
+            "name": "Intake temperature",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 90,
+            "limit_start": 60,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x10, 0xCE, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "x*0.75-48",
+            "unit": "°C",
+            "is_16bit": false
+        },
+        {
+            "request": "coolant",
+            "name": "Coolant temperature",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 150,
+            "limit_start": 100,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x10, 0xD8, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "x*0.75-48",
+            "unit": "°C",
+            "is_16bit": false
+        },
+        {
+            "request": "voltage",
+            "name": "Voltage",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 16,
+            "limit_start": 16,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x10, 0x0A, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "x*1/10.6113989637306",
+            "unit": "V",
+            "is_16bit": false
+        },
+        {
+            "request": "lambda1",
+            "name": "Oxygen front sensor, bank 1",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 2,
+            "limit_start": 2,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x10, 0x34, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "x*1",
+            "unit": "λ",
+            "is_16bit": true
+        },
+        {
+            "request": "lambda2",
+            "name": "Oxygen rear sensor, bank 1",
+            "label": "Boost",
+            "min_value": 0,
+            "max_value": 2,
+            "limit_start": 2,
+            "can_interface": "can0",
+            "req_msg": "[0xCD, 0x7A, 0xA6, 0x10, 0x2C, 0x01, 0x00, 0x00]",
+            "rep_id": "0x00400021",
+            "scale": "(x*1.33-51)/2551",
+            "unit": "V",
+            "is_16bit": false
+        }
+    ]
+}

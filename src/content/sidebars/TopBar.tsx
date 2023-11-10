@@ -27,19 +27,19 @@ const TopBar = ({ applicationSettings, phoneState, wifiState }) => {
     <div className={`topbar ${applicationSettings.app.colorTheme.value}`}>
       <div className="topbar__info">
         <svg className={`topbar__icon topbar__icon--${(wifiState ? "connected" : "disconnected")}`}>
-          <use xlinkHref="./../assets/wifi.svg#wifi"></use>
+          <use xlinkHref="/svg/wifi.svg#wifi"></use>
         </svg>
         <svg className={`topbar__icon topbar__icon--${'disconnected'}`}>
-          <use xlinkHref="./../assets/bluetooth.svg#bluetooth"></use>
+          <use xlinkHref="/svg/bluetooth.svg#bluetooth"></use>
         </svg>
         <svg className={`topbar__icon topbar__icon--${(phoneState ? "connected" : "disconnected")}`}>
-          <use xlinkHref="./../assets/phone.svg#phone"></use>
+          <use xlinkHref="/svg/phone.svg#phone"></use>
         </svg>
       </div>
       <div>
         <div className="topbar__banner">
           <svg className="topbar__banner__graphic">
-            <use xlinkHref="./../assets/banner.svg#banner"></use>
+            <use xlinkHref="/svg/banner.svg#banner"></use>
           </svg>
         </div>
       </div>

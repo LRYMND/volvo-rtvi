@@ -22,7 +22,7 @@ const Dashboard = ({ canbusSettings, applicationSettings, carData }) => {
 
 
 	function loadTheme() {
-		let style = getComputedStyle(document.querySelector(".dashboard"));
+		const style = getComputedStyle(document.querySelector(".dashboard"));
 
 		setSectionColor(style.getPropertyValue("--sectionColor"));
 		setColorNeedle(style.getPropertyValue("--colorNeedle"));

@@ -10,7 +10,7 @@ const LineChart = ({
     yMax,
     tickCountX,
     tickCountY,
-    userSettings,
+    applicationSettings,
     carData,
     unit,
     length,
@@ -28,6 +28,11 @@ const LineChart = ({
     useEffect(() => {
         const timer = setInterval(() => {
             let value = cardataRef.current;
+            
+            if (isNaN(value)) {
+                value = 0;
+              }
+
             if (value > yMax) value = yMax;
             if (value < yMin) value = yMin;
             setDataStream(prevDataStream => [value, ...prevDataStream.slice(0, length - 1)]);
@@ -130,7 +135,7 @@ const LineChart = ({
 
 
     return (
-        <div className={`swiper ${userSettings.app.colorTheme.value}`} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginBottom: "-1rem" }}>
+        <div className={`swiper ${applicationSettings.app.colorTheme.value}`} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginBottom: "-1rem" }}>
             <div className="values" style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", marginBottom: "-1.5rem" }}>
                 <div className="values__label" style={{ color: "var(--textColorHover)" }}>
                     <h4>{label}:</h4>

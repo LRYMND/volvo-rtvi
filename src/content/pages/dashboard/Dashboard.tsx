@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import RadialGauge from '../../components/rtvi/RadialGauge'
+import RadialGauge from '../../components/RadialGauge'
 
-import "../../themes.scss";
+import "./../../../themes.scss"
 import './dashboard.scss';
 
-const Dashboard = ({ canbusSettings, userSettings, carData }) => {
+const Dashboard = ({ canbusSettings, applicationSettings, carData }) => {
 
 	useEffect(() => {
 		loadTheme();
@@ -35,18 +35,18 @@ const Dashboard = ({ canbusSettings, userSettings, carData }) => {
 
 
 	return (
-		<div className={`dashboard ${userSettings.app.colorTheme.value}`}>
+		<div className={`dashboard ${applicationSettings.app.colorTheme.value}`}>
 			<div className="dashboard__header">
 			</div>
-			{loaded && canbusSettings && userSettings ?
+			{loaded && canbusSettings && applicationSettings ?
 				<div className="dashboard__gauges">
-					{userSettings.visibility.showGauge_1.value ?
+					{applicationSettings.visibility.showGauge_1.value ?
 						<RadialGauge
-							currentValue={carData[userSettings.dash_1.gauge_1.value]}
-							maxValue={canbusSettings.messages[userSettings.dash_1.gauge_1.value].max_value}
-							limitStart={canbusSettings.messages[userSettings.dash_1.gauge_1.value].limit_start}
-							title={canbusSettings.messages[userSettings.dash_1.gauge_1.value].label}
-							unit={canbusSettings.messages[userSettings.dash_1.gauge_1.value].unit}
+							currentValue={carData[applicationSettings.dash_1.gauge_1.value]}
+							maxValue={canbusSettings.messages[applicationSettings.dash_1.gauge_1.value].max_value}
+							limitStart={canbusSettings.messages[applicationSettings.dash_1.gauge_1.value].limit_start}
+							title={canbusSettings.messages[applicationSettings.dash_1.gauge_1.value].label}
+							unit={canbusSettings.messages[applicationSettings.dash_1.gauge_1.value].unit}
 
 							globalRotation={90}
 							size={110}
@@ -75,14 +75,14 @@ const Dashboard = ({ canbusSettings, userSettings, carData }) => {
 							borderColor={sectionColor}
 						/>
 						: <div></div>}
-					{userSettings.visibility.showGauge_2.value ?
+					{applicationSettings.visibility.showGauge_2.value ?
 
 						<RadialGauge
-							currentValue={carData[userSettings.dash_1.gauge_2.value]}
-							maxValue={canbusSettings.messages[userSettings.dash_1.gauge_2.value].max_value}
-							limitStart={canbusSettings.messages[userSettings.dash_1.gauge_2.value].limit_start}
-							title={canbusSettings.messages[userSettings.dash_1.gauge_2.value].label}
-							unit={canbusSettings.messages[userSettings.dash_1.gauge_2.value].unit}
+							currentValue={carData[applicationSettings.dash_1.gauge_2.value]}
+							maxValue={canbusSettings.messages[applicationSettings.dash_1.gauge_2.value].max_value}
+							limitStart={canbusSettings.messages[applicationSettings.dash_1.gauge_2.value].limit_start}
+							title={canbusSettings.messages[applicationSettings.dash_1.gauge_2.value].label}
+							unit={canbusSettings.messages[applicationSettings.dash_1.gauge_2.value].unit}
 
 							globalRotation={90}
 							size={120}
@@ -111,13 +111,13 @@ const Dashboard = ({ canbusSettings, userSettings, carData }) => {
 							borderColor={sectionColor}
 						/>
 						: <div></div>}
-					{userSettings.visibility.showGauge_3.value ?
+					{applicationSettings.visibility.showGauge_3.value ?
 						<RadialGauge
-							currentValue={carData[userSettings.dash_1.gauge_3.value]}
-							maxValue={canbusSettings.messages[userSettings.dash_1.gauge_3.value].max_value}
-							limitStart={canbusSettings.messages[userSettings.dash_1.gauge_3.value].limit_start}
-							title={canbusSettings.messages[userSettings.dash_1.gauge_3.value].label}
-							unit={canbusSettings.messages[userSettings.dash_1.gauge_3.value].unit}
+							currentValue={carData[applicationSettings.dash_1.gauge_3.value]}
+							maxValue={canbusSettings.messages[applicationSettings.dash_1.gauge_3.value].max_value}
+							limitStart={canbusSettings.messages[applicationSettings.dash_1.gauge_3.value].limit_start}
+							title={canbusSettings.messages[applicationSettings.dash_1.gauge_3.value].label}
+							unit={canbusSettings.messages[applicationSettings.dash_1.gauge_3.value].unit}
 
 							globalRotation={90}
 							size={110}
@@ -148,10 +148,10 @@ const Dashboard = ({ canbusSettings, userSettings, carData }) => {
 						: <div></div>}
 				</div> : <></>}
 			<>
-				{loaded && userSettings && canbusSettings ? <div className="dashboard__footer">
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[userSettings.dash_1.value_1.value].label}: {carData[userSettings.dash_1.value_1.value]}{canbusSettings.messages[userSettings.dash_1.value_1.value].unit}</h3></div>
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[userSettings.dash_1.value_2.value].label}: {carData[userSettings.dash_1.value_2.value]}{canbusSettings.messages[userSettings.dash_1.value_2.value].unit}</h3></div>
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[userSettings.dash_1.value_3.value].label}: {carData[userSettings.dash_1.value_3.value]}{canbusSettings.messages[userSettings.dash_1.value_3.value].unit}</h3></div>
+				{loaded && applicationSettings && canbusSettings ? <div className="dashboard__footer">
+					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_1.value].label}: {carData[applicationSettings.dash_1.value_1.value]}{canbusSettings.messages[applicationSettings.dash_1.value_1.value].unit}</h3></div>
+					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_2.value].label}: {carData[applicationSettings.dash_1.value_2.value]}{canbusSettings.messages[applicationSettings.dash_1.value_2.value].unit}</h3></div>
+					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_3.value].label}: {carData[applicationSettings.dash_1.value_3.value]}{canbusSettings.messages[applicationSettings.dash_1.value_3.value].unit}</h3></div>
 				</div> : <div className="dashboard__footer"><h3><i>(CAN-Stream deactivated.)</i></h3></div>}
 			</>
 		</div>

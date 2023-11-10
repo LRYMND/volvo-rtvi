@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect, } from "react";
 
-import "../themes.scss";
+import "./../../themes.scss"
 import "./topbar.scss";
 
-const TopBar = ({ userSettings, phoneState, wifiState }) => {
+const TopBar = ({ applicationSettings, phoneState, wifiState }) => {
   
   const [time, setDate] = useState(new Date());
 
@@ -24,22 +24,22 @@ const TopBar = ({ userSettings, phoneState, wifiState }) => {
 
 
   return (
-    <div className={`topbar ${userSettings.app.colorTheme.value}`}>
+    <div className={`topbar ${applicationSettings.app.colorTheme.value}`}>
       <div className="topbar__info">
         <svg className={`topbar__icon topbar__icon--${(wifiState ? "connected" : "disconnected")}`}>
-          <use xlinkHref="./svg/wifi.svg#wifi"></use>
+          <use xlinkHref="./../assets/wifi.svg#wifi"></use>
         </svg>
         <svg className={`topbar__icon topbar__icon--${'disconnected'}`}>
-          <use xlinkHref="./svg/bluetooth.svg#bluetooth"></use>
+          <use xlinkHref="./../assets/bluetooth.svg#bluetooth"></use>
         </svg>
         <svg className={`topbar__icon topbar__icon--${(phoneState ? "connected" : "disconnected")}`}>
-          <use xlinkHref="./svg/phone.svg#phone"></use>
+          <use xlinkHref="./../assets/phone.svg#phone"></use>
         </svg>
       </div>
       <div>
         <div className="topbar__banner">
           <svg className="topbar__banner__graphic">
-            <use xlinkHref="./svg/banner.svg#banner"></use>
+            <use xlinkHref="./../assets/banner.svg#banner"></use>
           </svg>
         </div>
       </div>

@@ -4,7 +4,7 @@ import os
 import sys 
 import can
 
-with open('can_config.json', 'r') as config_file:
+with open('can_settings.json', 'r') as config_file:
     config = json.load(config_file)
 
 REQ_ID = config['REQ_ID']

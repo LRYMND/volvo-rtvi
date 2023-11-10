@@ -4,6 +4,8 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 
+const versionNumber = '2.0.0'; // Replace with your version number
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -47,5 +49,5 @@ export default defineConfig({
         rollupNodePolyFill()
       ]
     }
-  }
+  },
 })

@@ -1,10 +1,10 @@
 import { React, useState, useEffect, } from "react";
 
-import "../themes.scss";
+import "./../../themes.scss"
 import "./dashbar.scss";
 
 
-const DashBar = ({ canbusSettings, userSettings, carData, wifiState, phoneState, setView }) => {
+const DashBar = ({ canbusSettings, applicationSettings, carData, wifiState, phoneState, setView }) => {
 
     useEffect(() => {
         loadTheme();
@@ -34,18 +34,18 @@ const DashBar = ({ canbusSettings, userSettings, carData, wifiState, phoneState,
 
 
     return (
-        <div className={`dashbar ${userSettings.app.colorTheme.value}`}>
+        <div className={`dashbar ${applicationSettings.app.colorTheme.value}`}>
             <div className="dashbar__dash">
                 <div className="dashbar__dash__bar">
-                    <h5>{canbusSettings.messages[userSettings.dash_bar.value_1.value].label}: {carData[userSettings.dash_bar.value_1.value]}{canbusSettings.messages[userSettings.dash_bar.value_1.value].unit}</h5>
+                    <h5>{canbusSettings.messages[applicationSettings.dash_bar.value_1.value].label}: {carData[applicationSettings.dash_bar.value_1.value]}{canbusSettings.messages[applicationSettings.dash_bar.value_1.value].unit}</h5>
                 </div>
 
                 <div className="dashbar__dash__bar">
-                    <h5>{canbusSettings.messages[userSettings.dash_bar.value_2.value].label}: {carData[userSettings.dash_bar.value_2.value]}{canbusSettings.messages[userSettings.dash_bar.value_2.value].unit}</h5>
+                    <h5>{canbusSettings.messages[applicationSettings.dash_bar.value_2.value].label}: {carData[applicationSettings.dash_bar.value_2.value]}{canbusSettings.messages[applicationSettings.dash_bar.value_2.value].unit}</h5>
                 </div>
 
                 <div className="dashbar__dash__bar">
-                    <h5>{canbusSettings.messages[userSettings.dash_bar.value_3.value].label}: {carData[userSettings.dash_bar.value_3.value]}{canbusSettings.messages[userSettings.dash_bar.value_3.value].unit}</h5>
+                    <h5>{canbusSettings.messages[applicationSettings.dash_bar.value_3.value].label}: {carData[applicationSettings.dash_bar.value_3.value]}{canbusSettings.messages[applicationSettings.dash_bar.value_3.value].unit}</h5>
                 </div>
             </div>
 
@@ -75,15 +75,15 @@ const DashBar = ({ canbusSettings, userSettings, carData, wifiState, phoneState,
             </div>
 
             {/*<ProgressBar
-                        currentValue={carData[userSettings.dash_bar.value_1.value]}
-                        maxValue={canbusSettings.messages[userSettings.dash_bar.value_1.value].max_value}
-                        unit={canbusSettings.messages[userSettings.dash_bar.value_1.value].unit}
-                        warning={canbusSettings.messages[userSettings.dash_bar.value_1.value].limit_start}
+                        currentValue={carData[applicationSettings.dash_bar.value_1.value]}
+                        maxValue={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].max_value}
+                        unit={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].unit}
+                        warning={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].limit_start}
                         progressColor={fillActive}
                         fillColor={sectionColor}
                         backgroundColor={fillInactive}
                         textColor={textColor}
-                        theme={userSettings.app.colorTheme.value} />*/}
+                        theme={applicationSettings.app.colorTheme.value} />*/}
 
 
         </div>

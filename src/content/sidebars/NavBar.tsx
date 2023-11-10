@@ -5,10 +5,10 @@ import CarplayIcon from "../../assets/carplay.svg"
 import SettingsIcon from "../../assets/settings.svg"
 
 import NavBarBackground from "./images/navbar.png"
-import "../../themes.scss";
+import "./../../themes.scss"
 import "./navbar.scss";
 
-const NavBar = ({ userSettings, view, setView }) => {
+const NavBar = ({ applicationSettings, view, setView }) => {
 
   function changeView(page) {
     setView(page)
@@ -16,7 +16,7 @@ const NavBar = ({ userSettings, view, setView }) => {
 
 
   return (
-    <div className={`navbar ${userSettings.app.colorTheme.value}`} style={{ backgroundImage: `url(${NavBarBackground})` }}>
+    <div className={`navbar ${applicationSettings.app.colorTheme.value}`} style={{ backgroundImage: `url(${NavBarBackground})` }}>
 
 
       <button type="button" onClick={() => changeView('Dashboard')}>

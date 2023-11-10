@@ -1,44 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import WifiModal from './modal/wifi/WifiModal';
 import useModal from './modal/useModal';
+import { io } from "socket.io-client";
 
-import "../../themes.scss";
+import "./../../../themes.scss"
 import './settings.scss';
 
-// const electron = require('electron');
-// const { ipcRenderer } = electron;
+const settingsChannel = io("ws://localhost:4001/settings")
+const ioChannel = io("ws://localhost:4001/io")
 
-import { IpcRendererEvent, contextBridge, ipcRenderer } from 'electron'
+const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
-const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber }) => {
-
-  /* State Variables */
-  const [wifiList, setWifiList] = useState([{ id: '', ssid: 'No Networks available' }]);
-  const [wifiStatus, setWifiStatus] = useState('');
-  const [ssidSelected, setSsidSelected] = useState('127.0.0.1');
+  // Wifi state variables
   const { wifiModalIsShowing, wifiModalToggle } = useModal();
-  const [newSettings, setNewSettings] = useState(structuredClone(userSettings));
 
 
-  /* Use Effects */
-  useEffect(() => {
-    ipcRenderer.on('wifiList', updateWifi);
-    ipcRenderer.on('wifiConnected', updateWifiStatus);
-    return function cleanup() {
-      ipcRenderer.removeAllListeners();
-    };
-  });
+  // Settings state variables
+  const [newSettings, setNewSettings] = useState(structuredClone(applicationSettings));
 
   useEffect(() => {
-    refreshWifi();
-
-  }, []);
-
-
-  useEffect(() => {
-    if (userSettings != null)
-      setNewSettings(structuredClone(userSettings))
-  }, [userSettings]);
+    if (applicationSettings != null)
+      setNewSettings(structuredClone(applicationSettings))
+  }, [applicationSettings]);
 
 
   /* Change Tabs */
@@ -70,9 +53,18 @@ const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber
 
   /* Save Settings */
   function saveSettings() {
-    ipcRenderer.send('saveSettings', newSettings);
-    setUserSettings(newSettings)
+    settingsChannel.emit("saveSettings", "application", newSettings);
+  }
+
+  function openWifiModal() {
+    wifiModalToggle();
   };
+
+
+  /* I/O Functionality */
+  function handleIO(request) {
+    ioChannel.emit("performIO", request);
+  }
 
 
   /* Render Settings */
@@ -150,67 +142,21 @@ const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber
   }
 
 
-  /* WiFi Functionality */
-  function connectWifi(password) {
-    var _credentials = {
-      ssid: ssidSelected,
-      password: password
-    };
-
-
-    console.log("Connecting with SSID: ", _credentials.ssid);
-    ipcRenderer.send('wifiConnect', _credentials);
-  };
-
-  /* Update WiFi */
-  function refreshWifi() {
-    ipcRenderer.send('wifiUpdate');
-  };
-
-
-  const updateWifi = (event, args) => {
-    setWifiList(args);
-  };
-
-
-  const updateWifiStatus = (event, args) => {
-    console.log(args);
-    setWifiStatus(args);
-  };
-
-
-  function resetWifiStatus() {
-    setWifiStatus('');
-  };
-
-
-  function openWifiModal(ssid) {
-    setSsidSelected(ssid);
-    wifiModalToggle();
-  };
-
-
-  /* I/O Functionality */
-  function handleIO(request) {
-    return function () {
-      ipcRenderer.send(request);
-    };
-  }
-
-
   return (
     <>
       <div className='spacer' />
-      <div className={`settings ${userSettings.app.colorTheme.value}`}>
+      <div className={`settings ${applicationSettings.app.colorTheme.value}`}>
 
+        {/* 
         <WifiModal isShowing={wifiModalIsShowing}
           ssid={ssidSelected}
           hide={wifiModalToggle}
-          settings={userSettings}
+          settings={applicationSettings}
           status={wifiStatus}
           connect={connectWifi}
           reset={resetWifiStatus}
         />
+        */}
 
         <div className='settings__header'>
           <h2>RTVI Settings</h2>
@@ -221,24 +167,14 @@ const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber
             <div className='section__1'>
               <div className='section__frame'>
                 <div className='section__frame__row'>
-                  <h3>WiFi Networks:</h3>
+                  <h3>Wireless Connections:</h3>
                 </div>
 
                 <div className='section__frame__content'>
                   <div className='scroller__container'>
                     <div className='scroller__container__content'>
-                      <div className='list'>
-                        {wifiList.map((item, i) => (
-                          <div className='list__content' key={i}>
-                            <button className='app-button' type='button' onClick={() => openWifiModal(item.ssid)}>{item.ssid}</button>
-                          </div>
-                        ))}
-                      </div>
+                      Coming soon...
                     </div>
-                  </div>
-
-                  <div className='section__frame__row'>
-                    <button className='app-button' type='button' onClick={refreshWifi}>Refresh</button>
                   </div>
                 </div>
               </div>
@@ -251,14 +187,14 @@ const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber
 
                   <div className='section__frame__row'>
                     <div className='section__frame__column'>
-                      <button className='app-button' type='button' onClick={handleIO('reqReboot')}>Reboot</button>
-                      <button className='app-button' type='button' onClick={handleIO('reqReload')}>Restart</button>
+                      <button className='app-button' type='button' onClick={() => {handleIO('reboot')}}>Reboot</button>
+                      <button className='app-button' type='button' onClick={() => {handleIO('restart')}}>Restart</button>
                     </div>
 
 
                     <div className='section__frame__column'>
-                      <button className='app-button' type='button' onClick={handleIO('reqClose')}>Quit</button>
-                      <button className='app-button' type='button' onClick={handleIO('resetSettings')}>Reset</button>
+                      <button className='app-button' type='button' onClick={() => {handleIO('quit')}}>Quit</button>
+                      <button className='app-button' type='button' onClick={() => {handleIO('reset')}}>Reset</button>
                     </div>
                   </div>
 
@@ -277,7 +213,7 @@ const Settings = ({ canbusSettings, userSettings, setUserSettings, versionNumber
                     <button className={`tab-button ${activeTab === 1 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(1)}> General </button>
                     <button className={`tab-button ${activeTab === 2 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(2)}> Customization </button>
                     {/* <button className={`tab-button ${activeTab === 3 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(3)}> Vehicle </button> */}
-                    {userSettings.dev.advancedSettings.value ? <button className={`tab-button ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
+                    {applicationSettings.dev.advancedSettings.value ? <button className={`tab-button ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
                   </div>
 
                   {activeTab === 1 &&

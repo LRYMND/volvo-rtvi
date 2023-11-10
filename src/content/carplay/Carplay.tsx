@@ -33,9 +33,9 @@ import {
   
   
   function Carplay() {
-    const [isPlugged, setPlugged] = useState(false)
-    const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
     const [receivingVideo, setReceivingVideo] = useState(false)
+    const [isPlugged, setIsPlugged] = useState(false)
+    const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
     const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -89,10 +89,10 @@ import {
         const { type } = ev.data
         switch (type) {
           case 'plugged':
-            setPlugged(true)
+            setIsPlugged(true)
             break
           case 'unplugged':
-            setPlugged(false)
+            setIsPlugged(false)
             break
           case 'video':
             // if document is hidden we dont need to feed frames

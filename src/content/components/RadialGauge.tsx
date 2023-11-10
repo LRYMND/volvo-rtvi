@@ -58,6 +58,9 @@ export const RadialGauge = ({
     if (heightSmallTicks > heightBigTicks)
         heightSmallTicks = heightBigTicks
 
+    if (isNaN(currentValue))
+        currentValue = 0;
+
     if (currentValue > maxValue) {
         currentValue = maxValue;
     }

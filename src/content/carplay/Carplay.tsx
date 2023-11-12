@@ -39,9 +39,10 @@ function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, se
   const [receivingVideo, setReceivingVideo] = useState(false)
   const [isPlugged, setIsPlugged] = useState(false)
   const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
-  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  
   const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(
     null,
   )
@@ -232,7 +233,7 @@ function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, se
               </button>
             </>
           )}
-          {deviceFound === true && (
+          {deviceFound === true && view === "Carplay" && (
             <RotatingLines
               strokeColor="grey"
               strokeWidth="5"

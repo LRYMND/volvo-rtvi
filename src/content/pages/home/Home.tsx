@@ -1,8 +1,6 @@
 import {
   useEffect,
   useState,
-  useRef,
-  useMemo,
 } from 'react'
 
 //import { GooSpinner } from 'react-spinners-kit';
@@ -45,7 +43,7 @@ const Home = ({
   // Connection state variables
   const [wifiState, setWifiState] = useState(false);
 
-  //Network state variables
+  // Canbus state variable
   const [carData, setCarData] = useState({})
 
   useEffect(() => {
@@ -74,8 +72,7 @@ const Home = ({
       settingsChannel.off("application", handleApplicationSettings);
       settingsChannel.off("canbus", handleCanbusSettings);
     };
-  });
-
+  }, []);
 
   useEffect(() => {
     console.log("Updating application-settings");
@@ -125,18 +122,12 @@ const Home = ({
   }, [phoneState, carplayState, view]);
 
 
-  const template = () => {
-    return null;
-  }
-
-
-
   const renderView = () => {
     switch (view) {
       case 'Carplay':
         return (
           <div className='container'>
-            {showOsd &&
+            {showOsd && carplayState &&
               <DashBar
                 className='dashbar'
                 canbusSettings={canbusSettings}
@@ -147,7 +138,6 @@ const Home = ({
                 setView={setView}
               />
             }
-            {/*<Carplay/>*/}
           </div >
         )
 

@@ -11,6 +11,18 @@
     justify-content: center;
 }
 
+.carplay {
+    background: var(--backgroundColor);
+
+    width: 100%;
+
+    font-family: 'Helvetica';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .refresh {
     width: 100%;
     height: 100%;
@@ -58,28 +70,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    &__load {
-        width: 100%;
-        font-size: 30px;
-
-        background: var(--backgroundColor);
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        position: absolute;
-    }
-
-    &__stream {
-        height: 100%;
-        width: 100%;
-        
-        position: relative;
-
-    }
 }
 
 .loading {

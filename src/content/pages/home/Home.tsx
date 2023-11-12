@@ -1,13 +1,13 @@
 import {
   useEffect,
   useState,
+  useRef,
+  useMemo,
 } from 'react'
 
 //import { GooSpinner } from 'react-spinners-kit';
 
 import { io } from "socket.io-client";
-
-import Carplay from '../../carplay/Carplay'
 
 import NavBar from '../../sidebars/NavBar';
 import TopBar from '../../sidebars/TopBar';
@@ -23,12 +23,18 @@ const settingsChannel = io("ws://localhost:4001/settings")
 const versionNumber = "2.0"
 
 
-const Home = () => {
+const Home = ({
+  applicationSettings,
+  setApplicationSettings,
+  canbusSettings,
+  setCanbusSettings,
+  view,
+  setView,
+  phoneState,
+  carplayState
+}) => {
 
   // Application state variables
-  const [view, setView] = useState('Dashboard')
-  const [applicationSettings, setApplicationSettings] = useState(null)
-  const [canbusSettings, setCanbusSettings] = useState(null)
   const [startedUp, setStartedUp] = useState(false);
 
   // Interface state variables
@@ -38,16 +44,9 @@ const Home = () => {
 
   // Connection state variables
   const [wifiState, setWifiState] = useState(false);
-  const [phoneState, setPhoneState] = useState(false);
-
-  // Carplay state variables
-
 
   //Network state variables
   const [carData, setCarData] = useState({})
-
-
-
 
   useEffect(() => {
     // Initial request for settings when component mounts
@@ -108,15 +107,12 @@ const Home = () => {
     }
   };
 
-
-
-  /*
   useEffect(() => {
-    console.log("streaming: ", receivingVideo)
-    console.log("phoneState: ", isPlugged)
+    console.log("streaming: ", carplayState)
+    console.log("phone connected: ", phoneState)
     console.log("view: ", view)
 
-    if (receivingVideo && isPlugged && (view === 'Carplay')) {
+    if (carplayState && phoneState && (view === 'Carplay')) {
       setShowTopBar(false);
       setShowNavBar(false);
       if (applicationSettings.interface.activateOSD)
@@ -126,12 +122,7 @@ const Home = () => {
       setShowNavBar(true);
       setShowOsd(false);
     }
-  }, [receivingVideo, isPlugged, view, applicationSettings]);
-*/
-
-  function leaveCarplay() {
-    setView('Dashboard')
-  }
+  }, [phoneState, carplayState, view]);
 
 
   const template = () => {
@@ -156,7 +147,7 @@ const Home = () => {
                 setView={setView}
               />
             }
-            <Carplay/>
+            {/*<Carplay/>*/}
           </div >
         )
 
@@ -208,66 +199,33 @@ const Home = () => {
 
   return (
     <>
-
-
-      {startedUp ?
+      {startedUp ? (
         <div className='container'>
-          {showTopBar &&
+          {showTopBar && (
             <TopBar
               className='topbar'
               applicationSettings={applicationSettings}
               wifiState={wifiState}
               phoneState={phoneState}
             />
-          }
+          )}
 
           {renderView()}
 
-          {showNavBar &&
+          {showNavBar && (
             <NavBar
               className='navbar'
               applicationSettings={applicationSettings}
               view={view}
               setView={setView}
             />
-          }
+          )}
         </div>
-        : <></>}
-
-      {/*
-      {startedUp ?
-        <div className='container'>
-          {showTop &&
-            <TopBar
-              className='topbar'
-              userSettings={userSettings}
-              wifiState={wifiState}
-              phoneState={phoneState}
-            />
-          }
-
-          {renderView()}
-
-          {showNav &&
-            <NavBar
-              className='navbar'
-              userSettings={userSettings}
-              view={view}
-              setView={setView}
-            />
-          }
-        </div>
-        :
-        <div className='refresh'>
-          <button className='refresh__button' type='button' onClick={reloadApp}>
-            <h1>RTVI</h1>
-          </button>
-          <span className='refresh__version'>v{versionNumber}</span>
-        </div>}
-        */}
+      ) : (
+        <></>
+      )}
     </>
   );
 };
-
 
 export default Home;

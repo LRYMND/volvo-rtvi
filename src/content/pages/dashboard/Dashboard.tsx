@@ -1,8 +1,8 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 
 import RadialGauge from '../../components/RadialGauge'
 
+import "./../../../styles.scss"
 import "./../../../themes.scss"
 import './dashboard.scss';
 
@@ -147,13 +147,42 @@ const Dashboard = ({ canbusSettings, applicationSettings, carData }) => {
 						/>
 						: <div></div>}
 				</div> : <></>}
-			<>
-				{loaded && applicationSettings && canbusSettings ? <div className="dashboard__footer">
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_1.value].label}: {carData[applicationSettings.dash_1.value_1.value]}{canbusSettings.messages[applicationSettings.dash_1.value_1.value].unit}</h3></div>
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_2.value].label}: {carData[applicationSettings.dash_1.value_2.value]}{canbusSettings.messages[applicationSettings.dash_1.value_2.value].unit}</h3></div>
-					<div className="dashboard__footer__element"><h3>{canbusSettings.messages[applicationSettings.dash_1.value_3.value].label}: {carData[applicationSettings.dash_1.value_3.value]}{canbusSettings.messages[applicationSettings.dash_1.value_3.value].unit}</h3></div>
-				</div> : <div className="dashboard__footer"><h3><i>(CAN-Stream deactivated.)</i></h3></div>}
-			</>
+			<div className="footer">
+				{loaded && applicationSettings && canbusSettings ?
+					<>
+						<div className="output">
+							<div className="output__label">
+								{canbusSettings.messages[applicationSettings.dash_1.value_1.value].label}:
+							</div>
+							<div className="output__data">
+								{carData[applicationSettings.dash_1.value_1.value]}{canbusSettings.messages[applicationSettings.dash_1.value_1.value].unit}
+							</div>
+						</div>
+
+						<div className="output">
+							<div className="output__label">
+								{canbusSettings.messages[applicationSettings.dash_1.value_2.value].label}:
+							</div>
+							<div className="output__data">
+								{carData[applicationSettings.dash_1.value_2.value]}{canbusSettings.messages[applicationSettings.dash_1.value_2.value].unit}
+							</div>
+						</div>
+						<div className="output">
+							<div className="output__label">
+								{canbusSettings.messages[applicationSettings.dash_1.value_3.value].label}:
+							</div>
+							<div className="output__data">
+								{carData[applicationSettings.dash_1.value_3.value]}{canbusSettings.messages[applicationSettings.dash_1.value_3.value].unit}
+							</div>
+						</div>
+					</> :
+					<div className="output">
+						<div className="output__label">
+							<i>(CAN-Stream deactivated.)</i>
+						</div>
+					</div>
+				}
+			</div>
 		</div>
 	)
 };

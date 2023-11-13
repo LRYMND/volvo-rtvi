@@ -3,7 +3,6 @@
   width: 100%;
   height: 100%;
   display: flex;
-  //overflow: hidden; /* Add overflow: hidden to hide scrollbars */
 }
 
 .swipe-container {
@@ -18,20 +17,13 @@
 .swipe-container > div {
   width: 50%; /* Set each page to 50% width */
   flex-shrink: 0;
-  box-sizing: border-box; /* Include padding and border in the width */
+  box-sizing: border-box;
 }
 
 .page1,
 .page2 {
   width: 100%;
   height: 100%;
-  box-sizing: border-box; /* Include padding and border in the width */
-}
-
-.page1 {
-  background-color: black;
-}
-
-.page2 {
+  box-sizing: border-box;
   background-color: black;
 }

@@ -29,7 +29,9 @@ const Home = ({
   view,
   setView,
   phoneState,
-  carplayState
+  setPhoneState,
+  carplayState,
+  setCarplayState
 }) => {
 
   // Application state variables
@@ -105,11 +107,12 @@ const Home = ({
   };
 
   useEffect(() => {
-    console.log("streaming: ", carplayState)
     console.log("phone connected: ", phoneState)
     console.log("view: ", view)
 
-    if (carplayState && phoneState && (view === 'Carplay')) {
+    if (phoneState === false) setCarplayState(false)
+
+    if (phoneState && (view === 'Carplay')) {
       setShowTopBar(false);
       setShowNavBar(false);
       if (applicationSettings.interface.activateOSD.value)
@@ -119,7 +122,7 @@ const Home = ({
       setShowNavBar(true);
       setShowOsd(false);
     }
-  }, [phoneState, carplayState, view]);
+  }, [phoneState, view]);
 
 
   const renderView = () => {
@@ -127,7 +130,7 @@ const Home = ({
       case 'Carplay':
         return (
           <div className='container'>
-            {showOsd && carplayState &&
+            {showOsd && phoneState &&
               <DashBar
                 className='dashbar'
                 canbusSettings={canbusSettings}

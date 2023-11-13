@@ -1,5 +1,3 @@
-import React from "react";
-
 const cos = Math.cos;
 const sin = Math.sin;
 const π = Math.PI;

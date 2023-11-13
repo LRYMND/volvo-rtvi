@@ -1,6 +1,7 @@
 import React from 'react';
 import LineChart from '../../components/LineChart'
 
+import "./../../../styles.scss"
 import "./../../../themes.scss"
 import './chartboard.scss';
 
@@ -14,29 +15,29 @@ const Chartboard = ({ canbusSettings, applicationSettings, carData, length }) =>
             {canbusSettings && applicationSettings ?
                 <div className="chartboard__content">
                     <div className="chartboard__content__left">
-                        <div className="chartboard__content__element">
-                            <div className="chartboard__content__element__label">
+                        <div className="output">
+                            <div className="output__label">
                                 <h5>{canbusSettings.messages[applicationSettings.dash_2.value_1.value].label}</h5>
                             </div>
-                            <div className="chartboard__content__element__value">
+                            <div className="output__data">
                                 <h1>{carData[applicationSettings.dash_2.value_1.value]}{canbusSettings.messages[applicationSettings.dash_2.value_1.value].unit}</h1>
                             </div>
                         </div>
 
-                        <div className="chartboard__content__element">
-                            <div className="chartboard__content__element__label">
+                        <div className="output">
+                            <div className="output__label">
                                 <h5>{canbusSettings.messages[applicationSettings.dash_2.value_2.value].label}</h5>
                             </div>
-                            <div className="chartboard__content__element__value">
+                            <div className="output__data">
                                 <h1>{carData[applicationSettings.dash_2.value_2.value]}{canbusSettings.messages[applicationSettings.dash_2.value_2.value].unit}</h1>
                             </div>
                         </div>
 
-                        <div className="chartboard__content__element">
-                            <div className="chartboard__content__element__label">
+                        <div className="output">
+                            <div className="output__label">
                                 <h5>{canbusSettings.messages[applicationSettings.dash_2.value_3.value].label}</h5>
                             </div>
-                            <div className="chartboard__content__element__value">
+                            <div className="output__data">
                                 <h1>{carData[applicationSettings.dash_2.value_3.value]}{canbusSettings.messages[applicationSettings.dash_2.value_3.value].unit}</h1>
                             </div>
                         </div>

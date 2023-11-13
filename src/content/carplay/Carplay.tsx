@@ -17,10 +17,14 @@ import {
 import { CarPlayWorker } from './worker/types'
 import useCarplayAudio from './useCarplayAudio'
 import { useCarplayTouch } from './useCarplayTouch'
-import { InitEvent, RenderEvent } from './worker/render/RenderEvents'
+import { InitEvent } from './worker/render/RenderEvents'
 
+import "./../../styles.scss"
 import "./../../themes.scss"
 import './carplay.scss';
+
+const videoChannel = new MessageChannel()
+const micChannel = new MessageChannel()
 
 
 function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState, setCarplayState, view, setView }) {
@@ -36,9 +40,6 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
     mediaDelay: 300,
   }
 
-
-
-  const [receivingVideo, setReceivingVideo] = useState(false)
   const [isPlugged, setIsPlugged] = useState(false)
   const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
 
@@ -63,7 +64,10 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
     )
     const canvas = canvasElement.transferControlToOffscreen()
     // @ts-ignore
-    worker.postMessage(new InitEvent(canvas), [canvas])
+    worker.postMessage(new InitEvent(canvas, videoChannel.port2), [
+      canvas,
+      videoChannel.port2,
+    ])
     return worker
   }, [canvasElement]);
 
@@ -73,19 +77,26 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
     }
   }, [])
 
-  const carplayWorker = useMemo(
-    () =>
-      new Worker(
-        new URL('./worker/CarPlay.worker.ts', import.meta.url), {
-        type: 'module'
+  const carplayWorker = useMemo(() => {
+    const worker = new Worker(
+      new URL('./worker/CarPlay.worker.ts', import.meta.url), {
+        type : 'module'
       }
-      ) as CarPlayWorker,
-    [],
-  )
+    ) as CarPlayWorker
+    const payload = {
+      videoPort: videoChannel.port1,
+      microphonePort: micChannel.port1,
+    }
+    worker.postMessage({ type: 'initialise', payload }, [
+      videoChannel.port1,
+      micChannel.port1,
+    ])
+    return worker
+  }, [])
 
-  const { processAudio, startRecording, stopRecording } =
-    useCarplayAudio(carplayWorker)
-
+  const { processAudio, getAudioPlayer, startRecording, stopRecording } =
+    useCarplayAudio(carplayWorker, micChannel.port2)
+  
   const clearRetryTimeout = useCallback(() => {
     if (retryTimeoutRef.current) {
       clearTimeout(retryTimeoutRef.current)
@@ -107,26 +118,13 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
           setPhoneState(false)
           setCarplayState(false)
           break
-        case 'video':
-          // if document is hidden we dont need to feed frames
-          if (!renderWorker || document.hidden) return
-          if (!receivingVideo) {
-            setReceivingVideo(true)
-            setCarplayState(true)
-          }
+        case 'requestBuffer':
           clearRetryTimeout()
-
-          const { message: video } = ev.data
-          renderWorker.postMessage(new RenderEvent(video.data), [
-            video.data.buffer,
-          ])
-
+          getAudioPlayer(ev.data.message)
           break
         case 'audio':
           clearRetryTimeout()
-
-          const { message: audio } = ev.data
-          processAudio(audio)
+          processAudio(ev.data.message)
           break
         case 'media':
           //TODO: implement
@@ -162,8 +160,8 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
   }, [
     carplayWorker,
     clearRetryTimeout,
+    getAudioPlayer,
     processAudio,
-    receivingVideo,
     renderWorker,
     startRecording,
     stopRecording,
@@ -174,7 +172,10 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
       const device = request ? await requestDevice() : await findDevice()
       if (device) {
         setDeviceFound(true)
-        carplayWorker.postMessage({ type: 'start', payload: config })
+        const payload = {
+          config,
+        }
+        carplayWorker.postMessage({ type: 'start', payload })
       } else {
         setDeviceFound(false)
       }
@@ -205,7 +206,7 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
 
   const sendTouchEvent = useCarplayTouch(carplayWorker, width, height)
 
-  const isLoading = !receivingVideo || !isPlugged
+  const isLoading = !isPlugged
 
   return (
     <div
@@ -227,9 +228,9 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
           {deviceFound === false && (
             <>
 
-              <button className="custom-button" onClick={onClick} style={{ fill: 'var(--fillActive)' }}>
+              <button className="nav-button" style={{ color: 'var(--textColor)' }}>
                 <h3>Connect or click to pair dongle.</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" className="navbar__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" className="nav-icon">
                   <use xlinkHref="./svg/link.svg#link"></use>
                 </svg>
               </button>

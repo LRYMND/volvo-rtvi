@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import WifiModal from './modal/wifi/WifiModal';
+//import WifiModal from './modal/wifi/WifiModal';
 import useModal from './modal/useModal';
 import { io } from "socket.io-client";
 
 import "./../../../themes.scss"
+import "./../../../styles.scss"
 import './settings.scss';
 
 const settingsChannel = io("ws://localhost:4001/settings")
@@ -105,10 +106,10 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
 
       return (
-        <div className='setting__row' key={nestedKey}>
-          <div className='setting__row__element'>
+        <div className='setting-elements__row' key={nestedKey}>
+          <div className='setting-elements__row__item'>
             <span>{label}</span>
-            <span className='setting__row__divider'></span>
+            <span className='setting-elements__row__divider'></span>
             <span>
               {options ? (
                 <select className='dropdown' name={nestedKey} value={value} onChange={handleChange}>
@@ -134,10 +135,10 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
 
     return (
-      <div className='setting'>
+      <>
         {labelParagraph}
         {nestedElements}
-      </div>
+      </>
     );
   }
 
@@ -172,7 +173,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
                 <div className='section__frame__content'>
                   <div className='scroller__container'>
-                    <div className='scroller__container__content'>
+                    <div className='scroller__container__content scrollbar-styles'>
                       Coming soon...
                     </div>
                   </div>
@@ -187,14 +188,14 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
                   <div className='section__frame__row'>
                     <div className='section__frame__column'>
-                      <button className='app-button' type='button' onClick={() => {handleIO('reboot')}}>Reboot</button>
-                      <button className='app-button' type='button' onClick={() => {handleIO('restart')}}>Restart</button>
+                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('reboot')}}>Reboot</button>
+                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('restart')}}>Restart</button>
                     </div>
 
 
                     <div className='section__frame__column'>
-                      <button className='app-button' type='button' onClick={() => {handleIO('quit')}}>Quit</button>
-                      <button className='app-button' type='button' onClick={() => {handleIO('reset')}}>Reset</button>
+                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('quit')}}>Quit</button>
+                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('reset')}}>Reset</button>
                     </div>
                   </div>
 
@@ -210,14 +211,14 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
               <div className='section__frame'>
                 <div className='scroller__container'>
                   <div className="tab">
-                    <button className={`tab-button ${activeTab === 1 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(1)}> General </button>
-                    <button className={`tab-button ${activeTab === 2 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(2)}> Customization </button>
+                    <button className={`square-button button-styles ${activeTab === 1 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(1)}> General </button>
+                    <button className={`square-button button-styles ${activeTab === 2 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(2)}> Customization </button>
                     {/* <button className={`tab-button ${activeTab === 3 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(3)}> Vehicle </button> */}
-                    {applicationSettings.dev.advancedSettings.value ? <button className={`tab-button ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
+                    {applicationSettings.dev.advancedSettings.value ? <button className={`button-styles ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
                   </div>
 
                   {activeTab === 1 &&
-                    <div className='scroller__container__content'>
+                    <div className='scroller__container__content scrollbar-styles'>
                       {renderSetting("app", handleSettingChange, newSettings)}
                       {renderSetting("interface", handleSettingChange, newSettings)}
                       {renderSetting("connections", handleSettingChange, newSettings)}
@@ -226,7 +227,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
                   }
 
                   {activeTab === 2 &&
-                    <div className='scroller__container__content'>
+                    <div className='scroller__container__content scrollbar-styles'>
                       {renderSetting("visibility", handleSettingChange, newSettings)}
                       {renderSetting("dash_bar", handleSettingChange, newSettings)}
                       {renderSetting("dash_1", handleSettingChange, newSettings)}
@@ -236,7 +237,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
                   }
 
                   {activeTab === 3 &&
-                    <div className='scroller__container__content'>
+                    <div className='scroller__container__content scrollbar-styles'>
                       {renderSetting("comfort", handleSettingChange, newSettings)}
                       {renderSetting("lights", handleSettingChange, newSettings)}
                     </div>
@@ -244,14 +245,14 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
 
                   {activeTab === 4 &&
-                    <div className='scroller__container__content'>
+                    <div className='scroller__container__content scrollbar-styles'>
                       {renderSetting("carplay", handleSettingChange, newSettings)}
                     </div>
                   }
                 </div>
 
                 <div className='section__frame__row'>
-                  <button className='app-button' type='button' onClick={saveSettings}>Save</button>
+                  <button className='round-button button-styles' type='button' onClick={saveSettings}>Save</button>
                 </div>
               </div>
             </div>

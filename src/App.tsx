@@ -39,7 +39,9 @@ function App() {
         view={view}
         setView={setView}
         phoneState={phoneState}
+        setPhoneState={setPhoneState}
         carplayState={carplayState}
+        setCarplayState={setCarplayState}
       />
     </>
   )

@@ -41,15 +41,12 @@ body {
         justify-content: center;
         align-items: center;
 
-
         background-color: var(--sectionColor);
         border-radius: 10px;
 
         margin: .5rem;
         padding: .5rem;
         overflow: hidden;
-
-
 
         &__row {
             display: flex;
@@ -81,7 +78,6 @@ body {
     }
 }
 
-
 .list {
     margin-top: .5rem;
     width: 95%;
@@ -91,9 +87,6 @@ body {
 }
 
 .scroller {
-
-    //margin: 1rem;
-
     &__container {
         flex: 1;
         width: 100%;
@@ -121,25 +114,6 @@ body {
             border-radius: 12px;
             background-color: var(--scrollContentBackground);
         }
-
-        &__content::-webkit-scrollbar {
-            width: 1.4rem;
-            cursor: auto;
-        }
-
-        &__content::-webkit-scrollbar-track {
-            background-color: var(--scrollBarBackground);
-            border-radius: 10px;
-        }
-
-        &__content::-webkit-scrollbar-thumb {
-            background-color: var(--fillActive);
-            border-radius: 10px;
-            min-height: 20px;
-            &:active {
-                background-color: var(--fillHover);
-            }
-        }
     }
 }
 
@@ -148,12 +122,10 @@ body {
     width: 100vw;
     height: calc(100vh - 8rem);
 
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
 
     &__header {
         width: 100%;
@@ -173,8 +145,7 @@ body {
     }
 }
 
-
-.setting {
+.setting-elements {
     width: 90%;
     //margin: 1rem;
     margin-bottom: 2rem;
@@ -186,14 +157,13 @@ body {
         margin-top: .5rem;
         margin-right: 3rem;
 
-
         line-height: .2rem;
 
         display: flex;
         flex-direction: column;
         justify-content: center;
 
-        &__element {
+        &__item {
             width: 100%;
             display: flex;
             align-items: center;
@@ -211,7 +181,6 @@ body {
     }
 }
 
-
 .tab {
     align-self: flex-start;
     margin-left: 2.5rem;
@@ -221,141 +190,4 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-
-.dropdown {
-    height: 2rem;
-    width: 6rem;
-    color: var(--textColor);
-    background-color: var(--buttonBackground);
-
-    border: none;
-    border-radius: 10px;
-
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-
-.app-button {
-    flex: 1;
-    color: var(--textColor);
-    background-color: var(--buttonBackground);
-    border: none;
-    border-radius: 10px;
-
-    width: 100%;
-    height: 2rem;
-    margin-bottom: .5rem;
-
-    text-align: center;
-    font-size: .8rem;
-
-
-    &:hover {
-        color: var(--textColorHover);
-        background-color: var(--buttonBackgroundHover);
-        cursor: pointer;
-    }
-
-    &:active {
-        color: var(--textColorActive);
-        background-color: var(--buttonBackgroundActive);
-    }
-
-    &:disabled {
-        color: var(--textColorInactive);
-        background-color: var(--buttonBackgroundInactive);
-        cursor: default;
-    }
-}
-
-
-.tab-button {
-    color: var(--textColor);
-    border: none;
-
-    width: 95%;
-    height: 2rem;
-
-    text-align: center;
-    font-size: .8rem;
-
-
-    &:hover:not(.active) {
-        color: var(--textColorActive);
-        background-image: linear-gradient(var(--buttonBackgroundActive), var(--scrollContentBackground));
-        cursor: pointer;
-      }
-    &.inactive {
-        color: var(--textColor);
-        background-color: var(--buttonBackgroundHover);
-    }
-
-    &.active {
-        color: var(--textColorHover);
-        background-color: var(--scrollContentBackground);
-    }
-    
-}
-
-.input {
-    height: 2rem;
-    width: 5.7rem;
-    color: var(--textColor);
-    background-color: var(--buttonBackground);
-
-    border: none;
-    border-radius: 10px;
-
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-
-input[type=checkbox] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-
-    //display: inline-block;
-    display: inline-block;
-    vertical-align: text-bottom;
-    width: 1rem;
-    height: 1rem;
-    padding: .05rem;
-
-    background-clip: content-box;
-    border: .1rem solid var(--textColor);
-    border-radius: 5px;
-    background-color: var(--sectionColor);
-    //margin-left: 2rem;
-    margin-right: 2rem;
-
-    color: #ffffff;
-
-    &:hover {
-        cursor: pointer;
-    }
-
-    &:checked {
-        background-color: var(--fillActive);
-    }
-
-    &:focus {
-        outline: none !important;
-    }
-
-    &:disabled {
-        background-color: var(--buttonBackgroundInactive);
-        cursor: default;
-
-    }
-
-    &:disabled+span {
-        color: var(--textColorInactive);
-    }
 }

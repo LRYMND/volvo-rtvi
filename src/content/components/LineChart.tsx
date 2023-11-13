@@ -1,5 +1,7 @@
-import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+
+import "./../../themes.scss"
+import "./../../styles.scss"
 
 const LineChart = ({
     label,
@@ -102,7 +104,7 @@ const LineChart = ({
             </g>
         );
     }
-
+    
 
     // Create the path string and labels for the y axis ticks
     const yTicks = [];
@@ -136,11 +138,11 @@ const LineChart = ({
 
     return (
         <div className={`swiper ${applicationSettings.app.colorTheme.value}`} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginBottom: "-1rem" }}>
-            <div className="values" style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", marginBottom: "-1.5rem" }}>
-                <div className="values__label" style={{ color: "var(--textColorHover)" }}>
+            <div className="output">
+                <div className="output__label">
                     <h4>{label}:</h4>
                 </div>
-                <div className="values__data" style={{ color: "var(--fillActive)", marginLeft: ".5rem" }}>
+                <div className="output__data">
                     <h3>{parseFloat(carData).toFixed(2)}{unit}</h3>
                 </div>
             </div>

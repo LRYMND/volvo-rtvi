@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect, } from "react";
 
 import "./../../themes.scss"
@@ -39,7 +38,7 @@ const TopBar = ({ applicationSettings, phoneState, wifiState }) => {
       <div>
         <div className="topbar__banner">
           <svg className="topbar__banner__graphic">
-            <use xlinkHref="/svg/banner.svg#banner"></use>
+            <use xlinkHref="/svg/volvo-banner.svg#volvo"></use>
           </svg>
         </div>
       </div>

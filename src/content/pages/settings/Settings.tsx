@@ -220,6 +220,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
                     <div className='scroller__container__content'>
                       {renderSetting("app", handleSettingChange, newSettings)}
                       {renderSetting("interface", handleSettingChange, newSettings)}
+                      {renderSetting("connections", handleSettingChange, newSettings)}
                       {renderSetting("dev", handleSettingChange, newSettings)}
                     </div>
                   }

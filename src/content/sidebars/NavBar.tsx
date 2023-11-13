@@ -12,7 +12,7 @@ const NavBar = ({ applicationSettings, view, setView }) => {
 				</svg>
 			</button>
 
-			{applicationSettings.interface.activateMMI.value ?
+			{applicationSettings.connections.activateMMI.value ?
 				<button className="custom-button" onClick={() => setView('Carplay')} style={{ fill: (view === 'Carplay') ? 'var(--fillActive)' : 'var(--fillInactive)' }}>
 					<svg xmlns="http://www.w3.org/2000/svg" className="navbar__icon">
 						<use xlinkHref="./svg/carplay.svg#carplay"></use>

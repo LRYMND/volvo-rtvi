@@ -1,40 +1,11 @@
-import { React, useState, useEffect, } from "react";
-
 import "./../../themes.scss"
 import "./dashbar.scss";
 
 
 const DashBar = ({ canbusSettings, applicationSettings, carData, wifiState, phoneState, setView }) => {
 
-    useEffect(() => {
-        loadTheme();
-    }, []);
-
-
-    const [textColor, setTextColor] = useState(null);
-    const [fillActive, setFillActive] = useState(null);
-    const [fillInactive, setFillInactive] = useState(null);
-    const [sectionColor, setSectionColor] = useState(null);
-
-
-    function loadTheme() {
-        let style = getComputedStyle(document.querySelector(".dashbar"));
-
-        setSectionColor(style.getPropertyValue("--sectionColor"));
-        setTextColor(style.getPropertyValue("--textColor"));
-        setFillActive(style.getPropertyValue("--fillActive"));
-        setFillInactive(style.getPropertyValue("--fillInactive"));
-    }
-
-    function changeView() {
-        setView('Dashboard')
-    }
-
-
-
-
     return (
-        <div className={`dashbar ${applicationSettings.app.colorTheme.value}`}>
+        <div className={`dashbar ${applicationSettings.app.colorTheme.value}`} style={{ height: `${applicationSettings.interface.heightOSD.value}px`}}>
             <div className="dashbar__dash">
                 <div className="dashbar__dash__bar">
                     <h5>{canbusSettings.messages[applicationSettings.dash_bar.value_1.value].label}: {carData[applicationSettings.dash_bar.value_1.value]}{canbusSettings.messages[applicationSettings.dash_bar.value_1.value].unit}</h5>

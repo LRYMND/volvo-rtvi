@@ -23,6 +23,8 @@ function App() {
       <div className='carplay'>
         <Carplay
           applicationSettings={applicationSettings}
+          phoneState={setPhoneState}
+          carplayState={setCarplayState}
           setPhoneState={setPhoneState}
           setCarplayState={setCarplayState}
           view={view}

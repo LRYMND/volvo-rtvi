@@ -4,14 +4,19 @@ import './swiper.scss';
 import Dashboard from '../dashboard/Dashboard';
 import Chartboard from '../chartboard/Chartboard';
 
-function Swiper({ canbusSettings, applicationSettings, carData }) {
+const totalPages = 2; // Adjust the number of pages accordingly
+const containerWidth = 100 * totalPages; // Set the total width of all pages
 
+
+function Swiper({ canbusSettings, applicationSettings, carData }) {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const swipeContainerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
 
+  const totalPages = 2; // Adjust the number of pages accordingly
+  const containerWidth = 100 * totalPages; // Set the total width of all pages
 
   function swipeLeft() {
     if (currentPageIndex < 1) {
@@ -19,13 +24,11 @@ function Swiper({ canbusSettings, applicationSettings, carData }) {
     }
   }
 
-
   function swipeRight() {
     if (currentPageIndex > 0) {
       setCurrentPageIndex(currentPageIndex - 1);
     }
   }
-
 
   function handleMouseDown(event) {
     setIsDragging(true);
@@ -37,7 +40,6 @@ function Swiper({ canbusSettings, applicationSettings, carData }) {
       setCurrentX(event.clientX);
     }
   }
-
 
   function handleMouseUp() {
     if (isDragging) {
@@ -51,34 +53,46 @@ function Swiper({ canbusSettings, applicationSettings, carData }) {
     }
   }
 
-
   return (
-    <div className="swipe-wrapper">
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+      }}
+    >
       <div
         ref={swipeContainerRef}
-        className="swipe-container"
         style={{
-          transform: `translateX(-${currentPageIndex * 100}%)`,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          width: `${containerWidth}%`,
           height: "100%",
-          zIndex: 1,
+          transform: `translateX(-${(currentPageIndex * (100 / totalPages))}%)`,
+          transition: "transform 0.5s ease-in-out",
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        <div className="page1">
+        <div
+          style={{
+            width: `${100 / totalPages}%`,
+          }}
+        >
           <Dashboard
             canbusSettings={canbusSettings}
             applicationSettings={applicationSettings}
             carData={carData}
           />
         </div>
-        <div className="page2">
+        <div
+          style={{
+            width: `${100 / totalPages}%`,
+          }}
+        >
           <Chartboard
             canbusSettings={canbusSettings}
             applicationSettings={applicationSettings}
@@ -90,6 +104,5 @@ function Swiper({ canbusSettings, applicationSettings, carData }) {
     </div>
   );
 }
-
 
 export default Swiper;

@@ -81,7 +81,7 @@ const Chartboard = ({ canbusSettings, applicationSettings, carData, length }) =>
                     </div>
                 </div> : <></>}
             <div className="chartboard__footer">
-                {applicationSettings.interface.activateCAN.value ? <></> : <div><h3><i>(CAN-Stream deactivated.)</i></h3></div>}
+                {applicationSettings.connections.activateCAN.value ? <></> : <div><h3><i>(CAN-Stream deactivated.)</i></h3></div>}
             </div>
         </div >
     )

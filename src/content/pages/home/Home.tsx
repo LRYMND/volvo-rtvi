@@ -112,7 +112,7 @@ const Home = ({
     if (carplayState && phoneState && (view === 'Carplay')) {
       setShowTopBar(false);
       setShowNavBar(false);
-      if (applicationSettings.interface.activateOSD)
+      if (applicationSettings.interface.activateOSD.value)
         setShowOsd(true);
     } else {
       setShowTopBar(true);

@@ -4,7 +4,7 @@
     background: black;
 
     display: flex;
-    position: relative;
+    position: absolute;
 
     align-items: center;
     justify-content: space-evenly;
@@ -12,6 +12,8 @@
 
     border-radius: 2rem;
     margin-bottom: 5px;
+
+    top: 0;
 
     &__dash {
         width: 30%;

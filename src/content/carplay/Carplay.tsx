@@ -22,27 +22,29 @@ import { InitEvent, RenderEvent } from './worker/render/RenderEvents'
 import "./../../themes.scss"
 import './carplay.scss';
 
-const width = window.innerWidth
-const height = window.innerHeight
 
-const config: Partial<DongleConfig> = {
-  width,
-  height,
-  fps: 60,
-  mediaDelay: 300,
-}
+function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState, setCarplayState, view, setView }) {
+  const RETRY_DELAY_MS = 30000
 
-const RETRY_DELAY_MS = 30000
+  const width = window.innerWidth
+  const height = applicationSettings.interface.activateOSD.value ? window.innerHeight - applicationSettings.interface.heightOSD.value : window.innerHeight;
+
+  const config: Partial<DongleConfig> = {
+    width,
+    height,
+    fps: 60,
+    mediaDelay: 300,
+  }
 
 
-function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, setView }) {
+
   const [receivingVideo, setReceivingVideo] = useState(false)
   const [isPlugged, setIsPlugged] = useState(false)
   const [deviceFound, setDeviceFound] = useState<Boolean | null>(null)
 
   const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  
+
   const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(
     null,
   )
@@ -217,7 +219,7 @@ function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, se
             position: 'absolute',
             width: '100%',
             height: '100%',
-            display: 'flex',
+            display: view === "Carplay" ? 'flex' : 'none',
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -233,7 +235,7 @@ function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, se
               </button>
             </>
           )}
-          {deviceFound === true && view === "Carplay" && (
+          {deviceFound === true && (
             <RotatingLines
               strokeColor="grey"
               strokeWidth="5"
@@ -253,16 +255,21 @@ function Carplay({ applicationSettings, setPhoneState, setCarplayState, view, se
         onPointerOut={sendTouchEvent}
         style={{
           height: '100%',
+          display: view === "Carplay" ? 'flex' : 'none',
           width: '100%',
           padding: 0,
           margin: 0,
-          display: 'flex',
+          marginTop: applicationSettings.interface.activateOSD.value ? applicationSettings.interface.heightOSD.value : 0,
         }}
       >
         <canvas
           ref={canvasRef}
           id="video"
-          style={isPlugged && view === "Carplay" ? { height: '100%' } : { display: 'none' }}
+          style={
+            isPlugged && view === "Carplay"
+              ? { height: '100%' }
+              : { display: 'none' }
+          }
         />
       </div>
     </div>

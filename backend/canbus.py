@@ -34,12 +34,14 @@ for key, message in SETTINGS['messages'].items():
     parameter0 = int(message['parameter'][0], 16)
     parameter1 = int(message['parameter'][1], 16)
 
+    dlc = 0xC8 + len([byte for byte in [parameter0, parameter1] if byte != 0]) # OxC8 + number of non-zero significant bytes 
+
     #CONSTRUCT BYTE ARRAYS AND STORE PARAMETERS
     req_id_bytes = [
         req_id
     ]
     message_bytes = [
-        0xCD, target, action, parameter0, parameter1, 0x01, 0x00, 0x00
+        dlc, target, action, parameter0, parameter1, 0x01, 0x00, 0x00
     ]
     print(message_bytes)
     rep_id_bytes = [

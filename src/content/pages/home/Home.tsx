@@ -33,7 +33,6 @@ const Home = ({
   carplayState,
   setCarplayState
 }) => {
-
   // Application state variables
   const [startedUp, setStartedUp] = useState(false);
 

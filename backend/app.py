@@ -1,5 +1,7 @@
+import json
 from flask import Flask, send_from_directory, render_template
 from flask_socketio import SocketIO
+from flask_cors import CORS 
 #import canbus
 import settings
 import os
@@ -15,9 +17,15 @@ port = 5173
 # Flask configuration
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'dist'), static_folder=os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), static_url_path='/assets')
 app.config['SECRET_KEY'] = 'your_secret_key'
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # Socket.io configuration
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+
+# Add custom headers to all responses
+@app.after_request
+def after_request(response):
+    return response
 
 # Route to serve the index.html file
 @app.route('/')
@@ -27,6 +35,8 @@ def serve_index():
 # Route to serve static files (js, css, etc.) from the 'dist/assets' folder
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
+    filename.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
+    filename.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
     return send_from_directory(os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), filename)
 
 # Function to start Chromium in its own thread
@@ -62,9 +72,11 @@ def handle_canbus_request(args):
     print('toggle canbus: ' + args)
 
     if args == 'on':
-        start_canbus()
+        print('start canbus')
+        #start_canbus()
     elif args == 'off':
-        stop_canbus()
+        print('stop canbus')
+        #stop_canbus()
     else:
         print('Unknown action:', args)
 

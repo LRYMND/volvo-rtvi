@@ -3,9 +3,9 @@ Road Traffic and Vehicle Infotainment
 
 ![TITLE IMAGE](repo/title2.jpg?raw=true "Title")
 
-This is a react web-app to run natively on the Raspberry Pi. It's providing a fully functioning Carplay/AndroidAuto integration as well as an interface for canbus and linbus. The app is intended for Volvo P-chassis with a T5 engine (C30, V50, V70 II). However, the canbus codes can be easily adjusted via a settings file in order to change the data.
+This is a react web-app to run natively on Mac/Linux and therefore also on a RaspberryPi. It's providing a fully functioning Carplay/AndroidAuto integration as well as an interface for canbus and linbus. The app is intended for Volvo P-chassis with a T5 engine (C30, V50, V70 II). However, the canbus codes can be easily adjusted with an exposed settings file in order to change the data.
 
-This project is based on the following repositories. All of the sources have been altered to create this app.
+This project is based on the following repositories:
 
 - evy0311         - Volvo-CAN-Gauge
 - rhysmorgan134   - react-carplay
@@ -18,8 +18,9 @@ This project is based on the following repositories. All of the sources have bee
 * [volve](https://github.com/LuukEsselbrugge/Volve)
 * [volvo-vida](https://github.com/Tigo2000/Volvo-VIDA)
 
-> You can find a demo gif at the end of the readme.
+![PAGES IMAGE](repo/pages.jpg?raw=true "Pages")
 
+> You can find a demo gif at the end of the readme.
 
 ### > How to use:
 ```
@@ -231,9 +232,8 @@ I am distancing myself from any damage that you might do to your car in case you
 
 ![DEMOGIF](repo/demo.gif?raw=true "Demo")
 
-Wanna support this project?
-<a href="https://www.buymeacoffee.com/lrymnd" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-<a href="https://www.buymeacoffee.com/tigo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+Wanna support this project?  
+<a href="https://www.buymeacoffee.com/lrymnd" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a> (Louis)  
+<a href="https://www.buymeacoffee.com/tigo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a> (Tigo)  
 
-Got any tips for improvement or need help? 
-Join our discussion on [Swedespeed](https://www.swedespeed.com/threads/volvo-rtvi-raspberry-media-can-interface.658254/)!
+Got any tips for improvement or need help?

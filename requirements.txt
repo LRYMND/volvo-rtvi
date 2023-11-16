@@ -1,0 +1,5 @@
+flask-socketio==5.3.6
+python-engineio==4.8.0
+python-socketio==5.10.0
+flask-cors==4.0.0
+python-can==4.2.2

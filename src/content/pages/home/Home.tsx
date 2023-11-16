@@ -17,6 +17,7 @@ import Settings from '../settings/Settings';
 import "./../../../themes.scss"
 import './home.scss';
 
+const canbusChannel = io("ws://localhost:4001/canbus")
 const settingsChannel = io("ws://localhost:4001/settings")
 const versionNumber = "2.0"
 
@@ -54,6 +55,16 @@ const Home = ({
   }, []);
 
   useEffect(() => {
+    //Dummyvalues
+    setCarData({
+      intake: 12.3,
+      boost: 1.1,
+      coolant: 94.5,
+      lambda1: .9,
+      lambda2: .85,
+      voltage: 14.2,
+    });
+
     // Event listener for receiving settings data
     const handleApplicationSettings = (data) => {
       console.log("Data received from socket:", data);
@@ -67,6 +78,22 @@ const Home = ({
 
     settingsChannel.on("application", handleApplicationSettings);
     settingsChannel.on("canbus", handleCanbusSettings);
+
+    // Cleanup function for removing the event listener when the component is unmounted
+    return () => {
+      settingsChannel.off("application", handleApplicationSettings);
+      settingsChannel.off("canbus", handleCanbusSettings);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Event listener for receiving canbus data
+    const handleCanbusData = (data) => {
+      console.log("Data received from canbus:", data);
+      updateCardata(data);
+    };
+
+    settingsChannel.on("data", handleCanbusData);
 
     // Cleanup function for removing the event listener when the component is unmounted
     return () => {
@@ -91,14 +118,14 @@ const Home = ({
   }, [canbusSettings])
 
 
-  const updateCardata = (args) => {
-    if (args != null) {
+  const updateCardata = (data) => {
+    if (data != null) {
       Object.keys(canbusSettings.messages).forEach((key) => {
         const message = canbusSettings.messages[key];
         const rtviId = message.rtvi_id;
 
-        if (args.includes(rtviId)) {
-          const value = args.replace(rtviId, "");
+        if (data.includes(rtviId)) {
+          const value = data.replace(rtviId, "");
           setCarData((prevState) => ({ ...prevState, [key]: Number(value).toFixed(2) }));
         }
       });

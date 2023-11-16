@@ -22,19 +22,19 @@ case "$1" in
   "dev")
     # Set port and chrome mode and indicate to start Vite for dev mode
     port="5173"
-    chrome_mode="http://localhost:$port/ --window-size=800,480"
+    chrome_mode="http://localhost:$port/ --window-size=800,480 --autoplay-policy=no-user-gesture-required"
     vite_start=true
     ;;
   "app")
     # Set port and chrome mode for app mode
     port="4001"
-    chrome_mode="--app=http://localhost:$port/ --window-size=800,480 --enable-features=SharedArrayBuffer"
+    chrome_mode="--app=http://localhost:$port/ --window-size=800,480 --disable-resize --enable-features=SharedArrayBuffer --autoplay-policy=no-user-gesture-required"
     vite_start=false
     ;;
   "kiosk")
     # Set port and chrome mode for kiosk mode
     port="5173"
-    chrome_mode="http://localhost:$port/ --window-size=800,480 --kiosk --enable-features=SharedArrayBuffer"
+    chrome_mode="http://localhost:$port/ --window-size=800,480 --kiosk --enable-features=SharedArrayBuffer --autoplay-policy=no-user-gesture-required"
     vite_start=false
     ;;
   *)

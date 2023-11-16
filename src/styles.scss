@@ -81,6 +81,16 @@
     &:disabled {
         background-color: var(--buttonBackgroundInactive);
     }
+
+    &.inactive {
+        color: var(--textColor);
+        background-color: var(--buttonBackgroundHover);
+    }
+
+    &.active {
+        color: var(--textColorHover);
+        background-color: var(--scrollContentBackground);
+    }
 }
 
 .button-styles {

@@ -26,7 +26,6 @@ import './carplay.scss';
 const videoChannel = new MessageChannel()
 const micChannel = new MessageChannel()
 
-
 function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState, setCarplayState, view, setView }) {
   const RETRY_DELAY_MS = 30000
 
@@ -63,7 +62,7 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
     }
     )
     const canvas = canvasElement.transferControlToOffscreen()
-    // @ts-ignore
+    // @ts-error
     worker.postMessage(new InitEvent(canvas, videoChannel.port2), [
       canvas,
       videoChannel.port2,
@@ -231,7 +230,7 @@ function Carplay({ applicationSettings, phoneState, setPhoneState, carplayState,
               <button className="nav-button" style={{ color: 'var(--textColor)' }}>
                 <h3>Connect or click to pair dongle.</h3>
                 <svg xmlns="http://www.w3.org/2000/svg" className="nav-icon">
-                  <use xlinkHref="./svg/link.svg#link"></use>
+                  <use xlinkHref="/assets/svg/link.svg#link"></use>
                 </svg>
               </button>
             </>

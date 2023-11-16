@@ -23,21 +23,21 @@ const DashBar = ({ canbusSettings, applicationSettings, carData, wifiState, phon
 
             <div className="dashbar__banner">
                 <svg className="dashbar__banner__graphic">
-                    <use xlinkHref="/svg/volvo-typo.svg#volvo"></use>
+                    <use xlinkHref="/assets/svg/volvo-typo.svg#volvo"></use>
                 </svg>
             </div>
 
             <div className="dashbar__info">
                 <svg className={`dashbar__icon dashbar__icon--${(wifiState ? "connected" : "disconnected")}`}>
-                    <use xlinkHref="/svg/wifi.svg#wifi"></use>
+                    <use xlinkHref="/assets/svg/wifi.svg#wifi"></use>
                 </svg>
 
                 <svg className={`dashbar__icon dashbar__icon--${'disconnected'}`}>
-                    <use xlinkHref="/svg/bluetooth.svg#bluetooth"></use>
+                    <use xlinkHref="/assets/svg/bluetooth.svg#bluetooth"></use>
                 </svg>
 
                 <svg className={`dashbar__icon dashbar__icon--${(phoneState ? "connected" : "disconnected")}`}>
-                    <use xlinkHref="/svg/phone.svg#phone"></use>
+                    <use xlinkHref="/assets/svg/phone.svg#phone"></use>
                 </svg>
 
 

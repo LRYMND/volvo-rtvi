@@ -23,3 +23,6 @@ backend/venv
 *.njsproj
 *.sln
 *.sw?
+
+#ETC
+README_new.md

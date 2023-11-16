@@ -33,8 +33,7 @@ def load_settings(setting):
         except Exception as e:
             print(f"Error copying default settings file: {e}")
             return None
-
-    print(f"Loading " + setting + "-settings...")
+        
     # Load the JSON settings into Python
     try:
         with open(destination_path, 'r') as file:

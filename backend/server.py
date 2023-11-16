@@ -17,7 +17,7 @@ port = 5173
 # Flask configuration
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'dist'), static_folder=os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), static_url_path='/assets')
 app.config['SECRET_KEY'] = 'your_secret_key'
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Socket.io configuration
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
@@ -35,9 +35,10 @@ def serve_index():
 # Route to serve static files (js, css, etc.) from the 'dist/assets' folder
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
-    filename.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
-    filename.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
-    return send_from_directory(os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), filename)
+    response = send_from_directory(os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), filename)
+    response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    return response
 
 # Function to start Chromium in its own thread
 def start_chromium():
@@ -73,26 +74,20 @@ def handle_canbus_request(args):
 
     if args == 'on':
         print('start canbus')
-        #start_canbus()
     elif args == 'off':
         print('stop canbus')
-        #stop_canbus()
     else:
         print('Unknown action:', args)
 
 # Return settings object to frontend via socket.io
 @socketio.on('requestSettings', namespace='/settings')
 def handle_request_settings(args):
-    print('settings requested for: ' + args)
-    # You can broadcast the message to all connected clients if needed.
     socketio.emit(args, settings.load_settings(args), namespace='/settings')
 
 # Save settings object from frontend to .config directory
 @socketio.on('saveSettings', namespace='/settings')
 def handle_save_settings(args, data):
     print('settings saving for: ' + args)
-    settings.save_settings(args, data)
-    # You can broadcast the message to all connected clients if needed.
     socketio.emit(args, settings.load_settings(args), namespace='/settings')
 
 @socketio.on('performIO', namespace='/io')

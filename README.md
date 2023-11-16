@@ -1,7 +1,9 @@
 # Volvo RTVI System
 Road Traffic and Vehicle Infotainment
 
-![TITLE IMAGE](repo/title2.jpg?raw=true "Title")
+![TITLE IMAGE](repo/title2.jpg?raw=true "Title")  
+
+![PAGES IMAGE](repo/pages.jpg?raw=true "Pages")  
 
 This is a react web-app to run natively on Mac/Linux and therefore also on a RaspberryPi. It's providing a fully functioning Carplay/AndroidAuto integration as well as an interface for canbus and linbus. The app is intended for Volvo P-chassis with a T5 engine (C30, V50, V70 II). However, the canbus codes can be easily adjusted with an exposed settings file in order to change the data.
 
@@ -18,9 +20,10 @@ This project is based on the following repositories:
 * [volve](https://github.com/LuukEsselbrugge/Volve)
 * [volvo-vida](https://github.com/Tigo2000/Volvo-VIDA)
 
-![PAGES IMAGE](repo/pages.jpg?raw=true "Pages")
-
 > You can find a demo gif at the end of the readme.
+
+Got any tips for improvement or need help?  
+Join our discussion on [Swedespeed](https://www.swedespeed.com/threads/volvo-rtvi-raspberry-media-can-interface.658254/)!
 
 ### > How to use:
 ```
@@ -41,7 +44,6 @@ npm run app / dev / kiosk
     <li><a>| Display Mod</a></li>
     <li><a>| Raspberry PSU</a></li>
     <li><a>| CAN Implementation</a></li>
-    <li><a>| RTVI App</a></li>
     <li><a>| Wiring</a></li>
     <li><a>| Set Up</a></li>
     <li><a>| Audio</a></li>
@@ -73,7 +75,7 @@ Also:
 
 ### > Note:
 
-The app runs on a RPi3 as well as on a RPi4 with OS Buster. Eventually, Carplay will run a little bit worse on a RPi 3 but this wasn't tested throughly yet.
+The app runs on a RPi3 as well as on a RPi4 with OS Buster and Bullseye, both on 32 and 64-bit.
 
 ## 02 | Display Mod
 
@@ -94,36 +96,26 @@ The power supply should fulfill some critical demands and available solutions ar
 
 I went through hours of online research until I found an article that would end my quest. However, after ordering the PCB and soldering the components I found out that the circuit was not functioning as expected. Once the ignition was off the Raspberry would immediately turn back on again.
 
-[link](https://dontpressthat.wordpress.com/2017/10/13/in-car-raspberry-pi-psu-controller/)
+[Source](https://dontpressthat.wordpress.com/2017/10/13/in-car-raspberry-pi-psu-controller/)
 
 In short, here are the reasons why:
 - Capacitance of the buck converter itself
 - Floating states on Q2/Q3
 
-More info’s on the issues and the solution can be found here: [link](https://forum.core-electronics.com.au/t/pi-power-switch-using-car-ignition-logic/6177/7). You can also find an updated and working schematic in the schematics folder of this repository. Basically, you only need to add two resistors. As stated in the original article, it is advisable to put a heatsink on the big transistor.
+More info on the issues and the solution can be found [here](https://forum.core-electronics.com.au/t/pi-power-switch-using-car-ignition-logic/6177/7). You can also find an updated and working schematic in the schematics folder of this repository. Basically, you only need to add two resistors. As stated in the original article, it is advisable to put a heatsink on the big transistor.
 
 A KiCAD project file and the PSU Gerber files are also available in the schematics folder. 
 
 ## 04 | CAN Implementation
 
-CAN communication with the Raspberry Pi is pretty straightforward. The only thing you will need for this is a MCP2515 module and adjust some settings. To connect your Raspi with the module you can follow this [link](https://forums.raspberrypi.com/viewtopic.php?t=296117).
+CAN communication with the Raspberry Pi is pretty straightforward. The only thing you will need for this is a MCP2515 module and adjust some settings. To connect your Raspi with the module you can follow [this](https://forums.raspberrypi.com/viewtopic.php?t=296117).
 
 ### > Note:
 
 Make sure that you also set up the automatic CAN channel activation on boot!
 
-## 05 | RTVI App
 
-RTVI is a webapp which is hosted on a python backend. In order to start the app, you will first have to run app.py. Afterwards you can open a chromium window and browse to http://localhost:4001.
-
-![CARPLAY IMAGE](repo/carplay.jpg?raw=true "Carplay")
-
-### > Note:
-
-You will need a working internet connection when you launch the app for the first time. The dongle will download some resources in order to function correctly.
-
-
-## 06 | Wiring
+## 05 | Wiring
 
 In the installation schematic you can see how you connect everything. I advise to keep the cables a bit longer and then shorten everything to the appropriate length once you install the package in your car.
 
@@ -152,21 +144,21 @@ Make sure that you stress-relief all wiring connections and secure them properly
 
 ![WIRING IMAGE](repo/wiring.jpg?raw=true "Wiring")
 
-## 07 | Set Up
+## 06 | Set Up
 
 ### > Installing the app:
 
-Launch the script "xyz.sh" in order to install the app.
+```
+Launch the script "RTVI-web-app-installer.sh" in order to install the app.
+```
 
 ### > Running the app:
 
-Launch the script "xyz.sh" in order to launch the app.
+```
+Launch the script "run.sh" in order to run the app.
+```
 
-### > RasPi setup, clean boot and autostart:
-
-Launch the script "xyz.sh" in order to set up your raspberry. 
-
-## 08 | Audio
+## 07 | Audio
 
 There are a couple of ways to use the raspberry as an audio source for your car speakers now. I propose a [small module](https://www.tindie.com/products/justtech/aux-input-volvo-v50-s40-c30-c70-xc90/) from Lithuania with which you can mod your radio to add an aux port. There is also a Bluetooth version available but since the phone is already wirelessly connected to the Carlinkit adapter dongle, an aux-cable seems pretty clean and less prone to failure.
 
@@ -176,7 +168,7 @@ If you already have an aux port in your car, you don't need this input board. Si
 
 This is no advertisement, just a clean and simple solution IMO.
 
-## 09 | Extended Functionality:
+## 08 | Extended Functionality:
 
 ### > Steering Wheel Controls
 
@@ -219,21 +211,24 @@ When ignition is turned on, the RTI screen automatically pops up and you can use
 
 To make life a bit easier I connected an USB extension cable to the Raspi which ends up in the tray behind the waterfall console so I can directly connect peripherals to it. This also works as a charging port for a phone. It's not fast but it works.
 
-## 10 | Roadmap
+## 09 | Roadmap
 
-- Integrate dtc functionality
-- Sniff canbus messages
-- Integrate mostbus
-- Improve hardware
+- [ ] Integrate DTC functionality
+- [ ] Sniff canbus messages
+- [ ] Integrate MOST-bus
+- [ ] Improve hardware and installation
 
-## 11 | Disclaimer
+## 10 | Disclaimer
 
 I am distancing myself from any damage that you might do to your car in case you want to follow this guide. The setup I described above is the way I fitted the package to my V50 and I know of several people who completed the mod successfully. Eventually you will need to find other places to mount your components and different paths to route your cables, after all it's DIY!
 
 ![DEMOGIF](repo/demo.gif?raw=true "Demo")
 
-Wanna support this project?  
-<a href="https://www.buymeacoffee.com/lrymnd" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a> (Louis)  
-<a href="https://www.buymeacoffee.com/tigo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a> (Tigo)  
+Got any tips for improvement or need help?  
+Join our discussion on [Swedespeed](https://www.swedespeed.com/threads/volvo-rtvi-raspberry-media-can-interface.658254/)!
 
-Got any tips for improvement or need help?
+
+Want to support us?  
+| [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/lrymnd)  | [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/tigo) |
+|---|---|
+| <center>(Louis)</center> | <center>(Tigo)</center> |

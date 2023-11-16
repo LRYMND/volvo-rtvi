@@ -12,7 +12,7 @@ import threading
 can_thread = None
 
 # Frontend port (Dev: 5173 | Production: 4001)
-port = 5173
+port = 4001
 
 # Flask configuration
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'dist'), static_folder=os.path.join(os.path.dirname(__file__), '..', 'dist', 'assets'), static_url_path='/assets')
@@ -88,6 +88,7 @@ def handle_request_settings(args):
 @socketio.on('saveSettings', namespace='/settings')
 def handle_save_settings(args, data):
     print('settings saving for: ' + args)
+    settings.save_settings(args, data)
     socketio.emit(args, settings.load_settings(args), namespace='/settings')
 
 @socketio.on('performIO', namespace='/io')

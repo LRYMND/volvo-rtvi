@@ -22,6 +22,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
   useEffect(() => {
     if (applicationSettings != null)
       setNewSettings(structuredClone(applicationSettings))
+    console.log("app settings received in settings page:", applicationSettings)
   }, [applicationSettings]);
 
 
@@ -188,14 +189,14 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
 
                   <div className='section__frame__row'>
                     <div className='section__frame__column'>
-                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('reboot')}}>Reboot</button>
-                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('restart')}}>Restart</button>
+                      <button className='round-button button-styles button-background' type='button' onClick={() => {handleIO('reboot')}}>Reboot</button>
+                      <button className='round-button button-styles button-background' type='button' onClick={() => {handleIO('restart')}}>Restart</button>
                     </div>
 
 
                     <div className='section__frame__column'>
-                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('quit')}}>Quit</button>
-                      <button className='round-button button-styles' type='button' onClick={() => {handleIO('reset')}}>Reset</button>
+                      <button className='round-button button-styles button-background' type='button' onClick={() => {handleIO('quit')}}>Quit</button>
+                      <button className='round-button button-styles button-background' type='button' onClick={() => {handleIO('reset')}}>Reset</button>
                     </div>
                   </div>
 
@@ -211,10 +212,10 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
               <div className='section__frame'>
                 <div className='scroller__container'>
                   <div className="tab">
-                    <button className={`square-button button-styles ${activeTab === 1 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(1)}> General </button>
-                    <button className={`square-button button-styles ${activeTab === 2 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(2)}> Customization </button>
+                    <button className={`square-button button-styles button-background ${activeTab === 1 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(1)}> General </button>
+                    <button className={`square-button button-styles button-background ${activeTab === 2 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(2)}> Customization </button>
                     {/* <button className={`tab-button ${activeTab === 3 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(3)}> Vehicle </button> */}
-                    {applicationSettings.dev.advancedSettings.value ? <button className={`button-styles ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
+                    {applicationSettings.dev.advancedSettings.value ? <button className={`square-button button-styles button-background ${activeTab === 4 ? 'active' : 'inactive'}`} type='button' onClick={() => handleTabChange(4)}> Advanced </button> : <></>}
                   </div>
 
                   {activeTab === 1 &&
@@ -252,7 +253,7 @@ const Settings = ({ canbusSettings, applicationSettings, versionNumber }) => {
                 </div>
 
                 <div className='section__frame__row'>
-                  <button className='round-button button-styles' type='button' onClick={saveSettings}>Save</button>
+                  <button className='round-button button-styles button-background' type='button' onClick={saveSettings}>Save</button>
                 </div>
               </div>
             </div>

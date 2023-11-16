@@ -1,42 +1,67 @@
 #!/bin/bash
 
-# Function to check command success
-check_command() {
-  if [ $? -eq 0 ]; then
-    echo "Success: $1"
-  else
-    echo "Error: $1"
-    exit 1
-  fi
+# Exit on error
+set -e
+
+# Function for cleanup
+cleanup() {
+  echo "Cleaning up..."
+  kill -TERM $vite_pid $python_pid $chromium_pid 2>/dev/null
 }
 
-# Set the default port
-port="5137"
+# Trap signals for cleanup
+trap 'cleanup; exit 1' INT TERM EXIT
 
-# Check if the first argument is "dev" or "prod"
-if [ "$1" == "dev" ]; then
-  echo "App running at: http://localhost:5137"
-  port="5137"
-elif [ "$1" == "app" ]; then
-  echo "App running at: http://localhost:4001"
-fi
+# Set the default values
+port=""
+vite_start=false
+chrome_mode=""
+
+# Check the argument passed
+case "$1" in
+  "dev")
+    # Set port and chrome mode and indicate to start Vite for dev mode
+    port="5173"
+    chrome_mode="http://localhost:$port/ --window-size=800,480"
+    vite_start=true
+    ;;
+  "app")
+    # Set port and chrome mode for app mode
+    port="4001"
+    chrome_mode="--app=http://localhost:$port/ --window-size=800,480 --enable-features=SharedArrayBuffer"
+    vite_start=false
+    ;;
+  "kiosk")
+    # Set port and chrome mode for kiosk mode
+    port="5173"
+    chrome_mode="http://localhost:$port/ --window-size=800,480 --kiosk --enable-features=SharedArrayBuffer"
+    vite_start=false
+    ;;
+  *)
+    echo "Invalid argument. Use 'app', 'dev', or 'kiosk'."
+    exit 1
+    ;;
+esac
 
 # Start Vite in the background if "dev" was passed
-if [ "$1" == "dev" ]; then
-  echo "Start Vite Server"
-  check_command "npm run dev"
-fi
+$vite_start && npm run vite & vite_pid=$!
 
 # Start the Python server in the background
-echo "Start Python Server"
-check_command "python ./backend/server.py"
+echo "Starting Backend"
+python ./backend/server.py & python_pid=$!
+
+# Print "App running at" message after the Python server has started successfully
+echo "App running at: http://localhost:$port"
 
 # Wait for a moment to ensure servers have started
 sleep 3
 
 # Start Chromium with the Vite app
-echo "Start Frontend"
-chromium-browser --app=http://localhost:$port/ --window-size=800,480 --enable-features=SharedArrayBuffer
+echo "Starting Frontend"
+chromium-browser $chrome_mode & chromium_pid=$!
+
+# Wait for the Chromium process to finish
+wait $chromium_pid
 
 # All commands executed successfully
-echo "All commands executed successfully"
+echo "Exit"

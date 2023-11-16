@@ -1,11 +1,17 @@
 {
-  "name": "rtvi",
-  "private": true,
-  "version": "0.1.0",
+  "name": "volvo-rtvi",
+  "productName": "Volvo RTVI",
+  "version": "2.0.0",
+  "private": false,
+  "author": {
+    "name": "Louis Raymond",
+    "email": "Louis.Raymond@live.at"
+  },
   "type": "module",
   "scripts": {
     "dev": "./scripts/start.sh dev",
     "app": "./scripts/start.sh app",
+    "kiosk": "./scripts/start.sh kiosk",
     "vite": "vite",
     "tsc": "tsc",
     "build": "vite build",
@@ -15,26 +21,19 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.40",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "buffer": "^6.0.3",
     "events": "^3.3.0",
-    "http-proxy-middleware": "^2.0.6",
-    "install": "^0.13.0",
     "node-carplay": "github:rhysmorgan134/node-CarPlay",
     "pcm-ringbuf-player": "github:lrymnd/pcm-ringbuf-player",
-    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
     "react-simple-keyboard": "^3.7.34",
     "react-spinners-kit": "^1.9.1",
     "sass": "^1.69.5",
-    "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
     "stream-browserify": "^3.0.0",
     "typescript": "^5.0.2",
@@ -42,19 +41,16 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@types/jmuxer": "^2.0.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
-    "@webgpu/types": "^0.1.37",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
-    "vite": "^4.5.0",
-    "vite-plugin-copy": "^0.1.6"
+    "vite": "^4.5.0"
   },
   "resolutions": {
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"

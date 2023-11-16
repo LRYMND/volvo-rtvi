@@ -28,36 +28,23 @@ const DashBar = ({ canbusSettings, applicationSettings, carData, wifiState, phon
             </div>
 
             <div className="dashbar__info">
-                <svg className={`dashbar__icon dashbar__icon--${(wifiState ? "connected" : "disconnected")}`}>
+                <svg className={`status-icon status-icon--${(wifiState ? "active" : "inactive")}`}>
                     <use xlinkHref="/assets/svg/wifi.svg#wifi"></use>
                 </svg>
 
-                <svg className={`dashbar__icon dashbar__icon--${'disconnected'}`}>
+                <svg className={`status-icon status-icon--${'inactive'}`}>
                     <use xlinkHref="/assets/svg/bluetooth.svg#bluetooth"></use>
                 </svg>
 
-                <svg className={`dashbar__icon dashbar__icon--${(phoneState ? "connected" : "disconnected")}`}>
+                <svg className={`status-icon status-icon--${(phoneState ? "active" : "inactive")}`}>
                     <use xlinkHref="/assets/svg/phone.svg#phone"></use>
                 </svg>
 
 
-                <button className='exit-button' type='button' onClick={() => setView('Dashboard')}>
+                <button className='button-styles nav-button' type='button' onClick={() => setView('Dashboard')}>
                     <div>EXIT</div>
                 </button>
             </div>
-
-            {/*<ProgressBar
-                        currentValue={carData[applicationSettings.dash_bar.value_1.value]}
-                        maxValue={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].max_value}
-                        unit={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].unit}
-                        warning={canbusSettings.messages[applicationSettings.dash_bar.value_1.value].limit_start}
-                        progressColor={fillActive}
-                        fillColor={sectionColor}
-                        backgroundColor={fillInactive}
-                        textColor={textColor}
-                        theme={applicationSettings.app.colorTheme.value} />*/}
-
-
         </div>
     );
 };

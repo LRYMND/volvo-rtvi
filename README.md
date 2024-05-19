@@ -1,3 +1,6 @@
+# DEPRECATED. PLEASE VISIT [VLINK](https://github.com/lrymnd/v-link)
+
+
 # Volvo RTVI System
 Road Traffic and Vehicle Infotainment
 
